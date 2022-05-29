@@ -381,6 +381,7 @@
     <Content Include="Content\images\inner-page\review-image\7.jpg" />
     <Content Include="Content\images\inner-page\review-image\8.jpg" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logo1.png" />
     <Content Include="Content\images\minus.svg" />
     <Content Include="Content\images\newletter-icon.png" />
     <Content Include="Content\images\payment-icon\1.jpg" />

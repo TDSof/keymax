@@ -158,84 +158,25 @@
                                         <div class="onhover-div profile-dropdown">
                                             <ul>
                                                 <li>
-                                                    <a href="log-in.html" class="d-block">Đăng nhập</a>
+                                                    <a href="~/User/Login" class="d-block">Đăng nhập</a>
                                                 </li>
                                                 <li>
-                                                    <a href="sign-up.html" class="d-block">Đăng ký</a>
+                                                    <a href="~/User/Register" class="d-block">Đăng ký</a>
+                                                </li>
+                                                <li>
+                                                    <a href="~/User" class="d-block">Thông tin cá nhân</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="d-block">Đăng xuất</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown cart-dropdown">
-                                        <button type="button" class="btn btn-solid-default btn-spacing">
+                                        <button onclick="location.href = 'cart.html';" type="button" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
-                                            <!-- <span>$5686.25</span> -->
+                                            <span>Cart</span>
                                         </button>
-                                        <div class="onhover-div">
-                                            <div class="cart-menu">
-                                                <div class="cart-title">
-                                                    <h6>
-                                                        <i data-feather="shopping-bag"></i>
-                                                        <span class="label label-theme rounded-pill">5</span>
-                                                    </h6>
-                                                    <span class="d-md-none d-block">
-                                                        <i class="fas fa-arrow-right back-cart"></i>
-                                                    </span>
-                                                </div>
-                                                <ul class="custom-scroll">
-                                                    <li>
-                                                        <div class="media">
-                                                            <img src="~/Content/images/fashion/product/front/1.jpg"
-                                                                 class="img-fluid blur-up lazyload" alt="">
-                                                            <div class="media-body">
-                                                                <h6>Slim Fit Plastic Coat</h6>
-                                                                <div class="qty-with-price">
-                                                                    <span>$78.00</span>
-                                                                    <span>
-                                                                        <input type="number" class="form-control"
-                                                                               value="1">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <button type="button" class="btn-close d-block d-md-none"
-                                                                    aria-label="Close">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="media">
-                                                            <img src="~/Content/images/fashion/product/front/7.jpg"
-                                                                 class="img-fluid blur-up lazyload" alt="">
-                                                            <div class="media-body">
-                                                                <h6>Womens Stylish Jacket</h6>
-                                                                <div class="qty-with-price">
-                                                                    <span>$24.00</span>
-                                                                    <span>
-                                                                        <input type="number" class="form-control"
-                                                                               value="1">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <button type="button" class="btn-close d-block d-md-none"
-                                                                    aria-label="Close">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="cart-btn">
-                                                <h6 class="cart-total">
-                                                    <span class="font-light">Total:</span> $
-                                                    542.00
-                                                </h6>
-                                                <button onclick="location.href = 'cart.html';" type="button"
-                                                        class="btn btn-solid-default btn-block">
-                                                    Proceed to payment
-                                                </button>
-                                            </div>
-                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -319,7 +260,9 @@
         </div>
     </header>
     <!-- header end -->
+
     @RenderBody()
+
     <!-- footer start -->
     <footer class="footer-sm-space">
         <div class="main-footer">
@@ -417,7 +360,7 @@
                         </ul> -->
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-0 font-dark">© 2022, Voxo Theme. Made with heart by Pixelstrap</p>
+                        <p class="mb-0 font-dark">© 2022, from NoName with ♥️.</p>
                     </div>
                 </div>
             </div>
