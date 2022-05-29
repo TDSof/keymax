@@ -1,0 +1,546 @@
+﻿
+@{
+    ViewBag.Title = "Trang cá nhân";
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Trang Cá Nhân</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Trang cá nhân</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+<!-- user dashboard section start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <ul class="nav nav-tabs custome-nav-tabs flex-column category-option" id="myTab">
+                    <li class="nav-item mb-2">
+                        <button class="nav-link font-light active" id="tab" data-bs-toggle="tab"
+                                data-bs-target="#dash" type="button">
+                            <i class="fas fa-angle-right"></i>Tổng quan
+                        </button>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <button class="nav-link font-light" id="1-tab" data-bs-toggle="tab" data-bs-target="#order"
+                                type="button">
+                            <i class="fas fa-angle-right"></i>Đơn hàng
+                        </button>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <button class="nav-link font-light" id="2-tab" data-bs-toggle="tab" data-bs-target="#save"
+                                type="button">
+                            <i class="fas fa-angle-right"></i>Saved Address
+                        </button>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <button class="nav-link font-light" id="3-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile" type="button">
+                            <i class="fas fa-angle-right"></i>Cá nhân
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <div class="filter-button dash-filter dashboard">
+                    <button class="btn btn-solid-default btn-sm fw-bold filter-btn">Show Menu</button>
+                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="dash">
+                        <div class="dashboard-right">
+                            <div class="dashboard">
+                                <div class="page-title title title1 title-effect">
+                                    <h2>Tổng quan</h2>
+                                </div>
+                                <div class="welcome-msg">
+                                    <h6 class="font-light">Hello, <span>User !</span></h6>
+                                    <p class="font-light">
+                                        From your My Account Dashboard you have the ability to
+                                        view a snapshot of your recent account activity and update your account
+                                        information. Select a link below to view or edit information.
+                                    </p>
+                                </div>
+                                <div class="order-box-contain my-4">
+                                    <div class="row g-4">
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="order-box">
+                                                <div class="order-box-image">
+                                                    <img src="~/Content/images/svg/box.png"
+                                                         class="img-fluid blur-up lazyload" alt="">
+                                                </div>
+                                                <div class="order-box-contain">
+                                                    <img src="~/Content/images/svg/box1.png"
+                                                         class="img-fluid blur-up lazyload" alt="">
+                                                    <div>
+                                                        <h5 class="font-light">Tổng đơn</h5>
+                                                        <h3>3648</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="order-box">
+                                                <div class="order-box-image">
+                                                    <img src="~/Content/images/svg/sent.png"
+                                                         class="img-fluid blur-up lazyload" alt="">
+                                                </div>
+                                                <div class="order-box-contain">
+                                                    <img src="~/Content/images/svg/sent1.png"
+                                                         class="img-fluid blur-up lazyload" alt="">
+                                                    <div>
+                                                        <h5 class="font-light">Đơn đang chờ</h5>
+                                                        <h3>123</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="order-box">
+                                                <div class="order-box-image">
+                                                    <img src="~/Content/images/svg/wishlist.png"
+                                                         class="img-fluid blur-up lazyload" alt="">
+                                                </div>
+                                                <div class="order-box-contain">
+                                                    <img src="~/Content/images/svg/wishlist1.png"
+                                                         class="img-fluid blur-up lazyload" alt="">
+                                                    <div>
+                                                        <h5 class="font-light">Đơn đã huỷ</h5>
+                                                        <h3>123</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-account box-info">
+                                    <div class="box-head">
+                                        <h3>Thông tin tài khoản</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="box">
+                                                <div class="box-title">
+                                                    <h4>Thông tin liên hệ</h4>
+                                                </div>
+                                                <div class="box-content">
+                                                    <h6 class="font-light">MARK JECNO</h6>
+                                                    <h6 class="font-light">MARk-JECNO@gmail.com</h6>
+                                                    <a href="javascript:void(0)">Change Password</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="box">
+                                                <div class="box-title">
+                                                    <h4>Đơn hàng gần đây</h4>
+                                                </div>
+                                                <div class="box-content">
+                                                    <h6 class="font-light">
+                                                        You are currently not subscribed to any
+                                                        newsletter.
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade table-dashboard dashboard wish-list-section" id="order">
+                        <div class="box-head mb-3">
+                            <h3>Lịch sử mua hàng</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table cart-table">
+                                <thead>
+                                    <tr class="table-head">
+                                        <th scope="col">image</th>
+                                        <th scope="col">Mã đơn</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Tổng tiền</th>
+                                        <th scope="col">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/front/1.jpg"
+                                                     class="blur-up lazyload" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="mt-0">#125021</p>
+                                        </td>
+                                        <td>
+                                            <p class="success-button btn btn-sm">Shipped</p>
+                                        </td>
+                                        <td>
+                                            <p class="theme-color fs-6">$49.54</p>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/front/2.jpg"
+                                                     class="blur-up lazyload" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="mt-0">#125367</p>
+                                        </td>
+                                        <td>
+                                            <p class="danger-button btn btn-sm">Pending</p>
+                                        </td>
+                                        <td>
+                                            <p class="theme-color fs-6">$49.54</p>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/front/3.jpg"
+                                                     class="blur-up lazyload" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="m-0">#125948</p>
+                                        </td>
+                                        <td>
+                                            <p class="success-button btn btn-sm">Shipped</p>
+                                        </td>
+                                        <td>
+                                            <p class="theme-color fs-6">$49.54</p>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/front/4.jpg"
+                                                     class="blur-up lazyload" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="m-0">#127569</p>
+                                        </td>
+                                        <td>
+                                            <p class="success-button btn btn-sm">Shipped</p>
+                                        </td>
+                                        <td>
+                                            <p class="theme-color fs-6">$49.54</p>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/front/5.jpg"
+                                                     class="blur-up lazyload" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="m-0">#125753</p>
+                                        </td>
+                                        <td>
+                                            <p class="danger-button btn btn-sm">Canceled</p>
+                                        </td>
+                                        <td>
+                                            <p class="theme-color fs-6">$49.54</p>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/front/6.jpg"
+                                                     class="blur-up lazyload" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="m-0">#125021</p>
+                                        </td>
+                                        <td>
+                                            <p class="danger-button btn btn-sm">Canceled</p>
+                                        </td>
+                                        <td>
+                                            <p class="theme-color fs-6">$49.54</p>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade dashboard" id="save">
+                        <div class="box-head">
+                            <h3>Save Address</h3>
+                            <button class="btn btn-solid-default btn-sm fw-bold ms-auto" data-bs-toggle="modal"
+                                    data-bs-target="#addAddress">
+                                <i class="fas fa-plus"></i>
+                                Add New Address
+                            </button>
+                        </div>
+                        <div class="save-details-box">
+                            <div class="row g-3">
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="save-details">
+                                        <div class="save-name">
+                                            <h5>Mark Jugal</h5>
+                                            <div class="save-position">
+                                                <h6>Home</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="save-address">
+                                            <p class="font-light">549 Sulphur Springs Road</p>
+                                            <p class="font-light">Downers Grove, IL</p>
+                                            <p class="font-light">60515</p>
+                                        </div>
+
+                                        <div class="mobile">
+                                            <p class="font-light mobile">Mobile No. +1-123-456-7890</p>
+                                        </div>
+
+                                        <div class="button">
+                                            <a href="javascript:void(0)" class="btn btn-sm">Edit</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="save-details">
+                                        <div class="save-name">
+                                            <h5>Method Zaki</h5>
+                                            <div class="save-position">
+                                                <h6>Office</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="save-address">
+                                            <p class="font-light">549 Sulphur Springs Road</p>
+                                            <p class="font-light">Downers Grove, IL</p>
+                                            <p class="font-light">60515</p>
+                                        </div>
+
+                                        <div class="mobile">
+                                            <p class="font-light mobile">Mobile No. +1-123-456-7890</p>
+                                        </div>
+
+                                        <div class="button">
+                                            <a href="javascript:void(0)" class="btn btn-sm">Edit</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="save-details">
+                                        <div class="save-name">
+                                            <h5>Mark Jugal</h5>
+                                            <div class="save-position">
+                                                <h6>Home</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="save-address">
+                                            <p class="font-light">549 Sulphur Springs Road</p>
+                                            <p class="font-light">Downers Grove, IL</p>
+                                            <p class="font-light">60515</p>
+                                        </div>
+
+                                        <div class="mobile">
+                                            <p class="font-light mobile">Mobile No. +1-123-456-7890</p>
+                                        </div>
+
+                                        <div class="button">
+                                            <a href="javascript:void(0)" class="btn btn-sm">Edit</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade dashboard-profile dashboard" id="profile">
+                        <div class="box-head">
+                            <h3>Profile</h3>
+                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                               data-bs-target="#resetEmail">Edit</a>
+                        </div>
+                        <ul class="dash-profile">
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Company Name</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>Voxo Fashion</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Country / Region</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>Downers Grove, IL</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Year Established</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>2018</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Total Employees</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>101 - 200 People</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Category</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>Clothing</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Street Address</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>549 Sulphur Springs Road</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">City/State</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>Downers Grove, IL</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Zip</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>60515</h6>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="box-head mt-lg-5 mt-3">
+                            <h3>Login Details</h3>
+                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                               data-bs-target="#resetEmail">Edit</a>
+                        </div>
+
+                        <ul class="dash-profile">
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Email Address</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>mark.jugal@gmail.com</h6>
+                                </div>
+                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                   data-bs-target="#resetEmail">Edit</a>
+                            </li>
+
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Phone No.</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>+1-202-555-0198</h6>
+                                </div>
+                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                   data-bs-target="#resetEmail">Edit</a>
+                            </li>
+
+                            <li class="mb-0">
+                                <div class="left">
+                                    <h6 class="font-light">Password</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>●●●●●●</h6>
+                                </div>
+                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                   data-bs-target="#resetEmail">Edit</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- user dashboard section end -->
