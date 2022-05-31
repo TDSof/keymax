@@ -1,0 +1,366 @@
+﻿@using KeyMax.DataQuery 
+@{
+    var product = (ProductWithType)ViewData["product"];
+    var productRelated = (List<ProductWithType>)ViewData["productRelated"];
+    ViewBag.Title = "Sản phẩm " + product.Product.product_name;
+    Func f = new Func();
+}
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Thông tin sản phẩm</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="~/Home">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Thông tin sản phẩm</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+<!-- Shop Section start -->
+<section>
+    <div class="container">
+        <div class="row gx-4 gy-5">
+            <div class="col-12">
+                <div class="details-items">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="degree-section">
+                                <div class="details-image ratio_asos">
+                                    <div>
+                                        <div class="product-image-tag">
+                                            <img src="@product.Product.product_img" id="zoom_01" data-zoom-image="@product.Product.product_img"
+                                                 class="img-fluid w-100 image_zoom_cls-0 blur-up lazyload" alt="">
+                                            @*<div class="label-tag">
+                                                <h6>
+                                                    <i class="fas fa-star"></i> 4.8 <span class="font-light">120</span>
+                                                </h6>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    @*<div>
+                                        <div class="product-image-tag">
+                                            <img src=" ~/Content/images/fashion/2.jpg" id="zoom_02"
+                                                 data-zoom-image="~/Content/images/fashion/2.jpg"
+                                                 class="img-fluid w-100 image_zoom_cls-1 blur-up lazyload" alt="">
+                                            <div class="label-tag">
+                                                <h6>
+                                                    <i class="fas fa-star"></i> 4.8 <span class="font-light">120</span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="product-image-tag">
+                                            <img src=" ~/Content/images/fashion/3.jpg" id="zoom_03"
+                                                 data-zoom-image="~/Content/images/fashion/3.jpg"
+                                                 class="img-fluid w-100 image_zoom_cls-2 blur-up lazyload" alt="">
+                                            <div class="label-tag">
+                                                <h6>
+                                                    <i class="fas fa-star"></i> 4.8 <span class="font-light">120</span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="product-image-tag">
+                                            <img src=" ~/Content/images/fashion/4.jpg" id="zoom_04"
+                                                 data-zoom-image="~/Content/images/fashion/4.jpg"
+                                                 class="img-fluid w-100 image_zoom_cls-3 blur-up lazyload" alt="">
+
+                                            <div class="label-tag">
+                                                <h6>
+                                                    <i class="fas fa-star"></i> 4.8 <span class="font-light">120</span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <div class="details-image-option black-slide mt-4 rounded">
+                                    <div>
+                                        <img src="@product.Product.product_img" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+                                    @*<div>
+                                        <img src="~/Content/images/fashion/2.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+                                    <div>
+                                        <img src="~/Content/images/fashion/3.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+                                    <div>
+                                        <img src="~/Content/images/fashion/4.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="cloth-details-size">
+                                <div class="product-count">
+                                    <ul>
+                                        <li>
+                                            <img src="~/Content/images/gif/fire.gif" class="img-fluid blur-up lazyload"
+                                                 alt="image">
+                                            <span class="p-counter">37</span>
+                                            <span class="lang">orders in last 24 hours</span>
+                                        </li>
+                                        <li>
+                                            <img src="~/Content/images/gif/person.gif" class="img-fluid user_img"
+                                                 alt="image">
+                                            <span class="p-counter">44</span>
+                                            <span class="lang">active view this</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="details-image-concept">
+                                    <h2>@product.Product.product_name</h2>
+                                </div>
+
+                                <div class="label-section">
+                                    <span class="badge badge-grey-color">#1 Best seller</span>
+                                    <span class="label-text">trong danh mục @product.ProductTypeName</span>
+                                </div>
+
+                                <h3 class="price-detail">@f.NumberToStr(product.Product.product_price) đ</h3>
+
+                                <div id="selectSize" class="addeffect-section product-description border-product">
+                                    <h6 class="product-title product-title-2 d-block">quantity</h6>
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <span class="input-group-prepend">
+                                                <button type="button" class="btn quantity-left-minus"
+                                                        data-type="minus" data-field="">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </span>
+                                            <input type="number" name="quantity" class="form-control input-number"
+                                                   value="1" min="1" />
+                                            <span class="input-group-prepend">
+                                                <button type="button" class="btn quantity-right-plus"
+                                                        data-type="plus" data-field="">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-buttons">
+                                    <a href="javascript:void(0)" id="cartEffect"
+                                       class="btn btn-solid hover-solid btn-animation">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Thêm vào giỏ hàng</span>
+                                    </a>
+                                </div>
+
+                                <ul class="product-count shipping-order">
+                                    <li>
+                                        <img src="~/Content/images/gif/truck.png" class="img-fluid blur-up lazyload"
+                                             alt="image">
+                                        <span class="lang">Freeship giá rẻ</span>
+                                    </li>
+                                </ul>
+
+                                <div class="border-product">
+                                    <h6 class="product-title d-block">Chia sẻ cho bạn bè</h6>
+                                    <div class="product-icon">
+                                        <ul class="product-social">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="../../../https@www.instagram.com/default.htm">
+                                                    <i class="fab fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="cloth-review">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#desc" type="button">
+                                Thông tin
+                            </button>
+                            <button class="nav-link" id="nav-speci-tab" data-bs-toggle="tab" data-bs-target="#speci"
+                                    type="button">
+                                Chi tiết
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="desc">
+                            <div class="shipping-chart">
+                                <div class="part">
+                                    <p class="font-light"><span style="white-space: pre-line">@product.Product.product_description.Replace("\\n", "\n")</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="speci">
+                            <div class="pro mb-4">
+                                <div class="table-responsive">
+                                    <table class="table table-part">
+                                        <tr>
+                                            <th>Gửi từ</th>
+                                            <td>TP. HCM</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Danh mục</th>
+                                            <td>@product.ProductTypeName</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section end -->
+<!-- product section start -->
+<section class="ratio_asos section-b-space overflow-hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-lg-4 mb-3">Sản phẩm liên quan</h2>
+                <div class="product-wrapper product-style-2 slide-4 p-0 light-arrow bottom-space">
+                    @foreach (var item in productRelated)
+                    {
+                        <div>
+                            <div class="product-box">
+                                <div class="img-wrapper">
+                                    <div class="front">
+                                        <a href="~/Shop/Detail/@item.Product.product_id">
+                                            <img src="@item.Product.product_img"
+                                                 class="bg-img blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                    @*<div class="back">
+                                        <a href="product-left-sidebar.html">
+                                            <img src="~/Content/images/fashion/product/back/1.jpg"
+                                                 class="bg-img blur-up lazyload" alt="">
+                                        </a>
+                                    </div>*@
+                                    <div class="cart-wrap">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)" class="addtocart-btn"
+                                                   data-bs-toggle="modal" data-bs-target="#addtocart">
+                                                    <i data-feather="shopping-bag"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                   data-bs-target="#quick-view">
+                                                    <i data-feather="eye"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-details">
+                                    <div class="rating-details">
+                                        <span class="font-light grid-content">@item.ProductTypeName</span>
+                                        @*<ul class="rating mt-0">
+                                            <li>
+                                                <i class="fas fa-star theme-color"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star theme-color"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star"></i>
+                                            </li>
+                                        </ul>*@
+                                    </div>
+                                    <div class="main-price">
+                                        <a href="~/Shop/Detail/@item.Product.product_id" class="font-default">
+                                            <h5>@item.Product.product_name</h5>
+                                        </a>
+                                        <div class="listing-content">
+                                            <span class="font-light">Regular Fit</span>
+                                            <p class="font-light">
+                                                Lorem ipsum, dolor sit amet consectetur adipisicing
+                                                elit. Sit, deserunt? Asperiores aliquam voluptatum culpa aliquid ab
+                                                ducimus eaque illum, quibusdam reiciendis id ad consectetur quis, animi
+                                                qui, minus quidem eveniet! Dolorum magnam numquam, asperiores
+                                                accusantium architecto placeat quam officia, tempore repellendus.
+                                            </p>
+                                        </div>
+                                        <h3 class="theme-color">@f.NumberToStr(item.Product.product_price)đ</h3>
+                                        <button class="btn listing-content">Thêm vào giỏ hàng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product section end -->

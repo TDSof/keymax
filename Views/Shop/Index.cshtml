@@ -1,6 +1,8 @@
-﻿
+﻿@using KeyMax.DataQuery
 @{
     ViewBag.Title = "Shop";
+    var listProducts = (List<ProductWithType>)ViewData["listProducts"];
+    Func f = new Func();
 }
 
 <!-- Breadcrumb section start -->
@@ -20,15 +22,15 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Shop Listing</h3>
+                <h3>Danh sách sản phẩm</h3>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index.html">
+                            <a href="~/Home">
                                 <i class="fas fa-home"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Shop Fashion</li>
+                        <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                     </ol>
                 </nav>
             </div>
@@ -43,26 +45,23 @@
             <div class="col-lg-12 col-12 ratio_30">
                 <div class="banner-deatils">
                     <div class="banner-image">
-                        <img src="~/Content/images/fashion/banner.jpg" class="img-fluid bg-img blur-up lazyload"
+                        <img src="~/Content/images/banner2.jpg" class="img-fluid bg-img blur-up lazyload"
                              alt="">
                         <div class="banner-content">
                             <div>
                                 <h3>Shop The Latest Trends</h3>
-                                <p>
-                                    Shop the latest clothing trends with our weekly edit of what's new in online at
-                                    Voxo. From out latest woman collection.
-                                </p>
+                                <p>From out latest collection.</p>
                             </div>
                         </div>
                     </div>
                     <div class="banner-contain mt-3 mb-5">
-                        <p class="font-light">
+                        @*<p class="font-light">
                             Lorem Ipsum is simply dummy text of the printing and typesetting
                             industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                             when an unknown printer took a galley of type and scrambled it to make a type specimen
                             book. It has survived not only five centuries, but also the leap into electronic
                             typesetting, remaining essentially unchanged.
-                        </p>
+                        </p>*@
                     </div>
                 </div>
                 <div class="row g-4">
@@ -180,23 +179,23 @@
                 <!-- label and featured section -->
                 <!-- Prodcut setion -->
                 <div class="row g-sm-4 g-3 row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 gx-sm-4 gx-3 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
-                    @for (int i = 0; i < 20; i++)
+                    @foreach (var item in listProducts)
                     {
                         <div>
                             <div class="product-box">
                                 <div class="img-wrapper">
                                     <div class="front">
-                                        <a href="product-left-sidebar.html">
-                                            <img src="~/Content/images/fashion/product/front/1.jpg"
+                                        <a href="~/Shop/Detail/@item.Product.product_id">
+                                            <img src="@item.Product.product_img"
                                                  class="bg-img blur-up lazyload" alt="">
                                         </a>
                                     </div>
-                                    <div class="back">
-                                        <a href="product-left-sidebar.html">
-                                            <img src="~/Content/images/fashion/product/back/1.jpg"
-                                                 class="bg-img blur-up lazyload" alt="">
-                                        </a>
-                                    </div>
+                                    @*<div class="back">
+                                            <a href="product-left-sidebar.html">
+                                                <img src="~/Content/images/fashion/product/back/1.jpg"
+                                                     class="bg-img blur-up lazyload" alt="">
+                                            </a>
+                                        </div>*@
                                     <!--<div class="cart-wrap">
                                         <ul>
                                             <li>
@@ -226,17 +225,17 @@
                                 </div>
                                 <div class="product-details">
                                     <div class="rating-details">
-                                        <span class="font-light grid-content">Loại ABC</span>
+                                        <span class="font-light grid-content">@item.ProductTypeName</span>
                                     </div>
                                     <div class="main-price">
-                                        <a href="product-left-sidebar.html" class="font-default">
-                                            <h5 class="ms-0">Sản phẩm thứ @i</h5>
+                                        <a href="~/Shop/Detail/@item.Product.product_id" class="font-default">
+                                            <h5 class="ms-0">@item.Product.product_name</h5>
                                         </a>
                                         <div class="listing-content">
                                             <span class="font-light">Regular Fit</span>
                                             <p class="font-light">ABC.</p>
                                         </div>
-                                        <h3 class="theme-color">$78.00</h3>
+                                        <h3 class="theme-color">@f.NumberToStr(item.Product.product_price)đ</h3>
                                         <button onclick="location.href = 'cart.html';" class="btn listing-content">Add To Cart</button>
                                     </div>
                                 </div>

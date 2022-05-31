@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KeyMax.DataQuery;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,11 @@ namespace KeyMax.Controllers
 {
     public class HomeController : Controller
     {
+        QueryData QD = new QueryData();
+
         public ActionResult Index()
         {
+            ViewData["listProducts"] = QD.GetProductsWithType("", 1, 8);
             return View();
         }
 
