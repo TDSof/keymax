@@ -30,12 +30,10 @@ namespace KeyMax.Models
         [StringLength(50)]
         public string user_password { get; set; }
 
-        [Required]
-        [StringLength(20)]
+        [StringLength(15)]
         public string user_phone_number { get; set; }
 
         [Column(TypeName = "text")]
-        [Required]
         public string user_address { get; set; }
 
         public DateTime? user_created_at { get; set; }

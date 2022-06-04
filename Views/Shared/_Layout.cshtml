@@ -120,18 +120,24 @@
                                         </div>
                                         <div class="onhover-div profile-dropdown">
                                             <ul>
-                                                <li>
-                                                    <a href="~/User/Login" class="d-block">Đăng nhập</a>
-                                                </li>
-                                                <li>
-                                                    <a href="~/User/Register" class="d-block">Đăng ký</a>
-                                                </li>
-                                                <li>
-                                                    <a href="~/User" class="d-block">Thông tin cá nhân</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="d-block">Đăng xuất</a>
-                                                </li>
+                                                @if (Session["user_id"] != null)
+                                                {
+                                                    <li>
+                                                        <a href="~/User" class="d-block">Thông tin cá nhân</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="d-block">Đăng xuất</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="~/User/Login" class="d-block">Đăng nhập</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/User/Register" class="d-block">Đăng ký</a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                     </li>
@@ -144,18 +150,20 @@
                                 </ul>
                             </div>
                             <div class="search-full">
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i data-feather="search" class="font-light"></i>
-                                    </span>
-                                    <input type="text" class="form-control search-type" placeholder="Search here..">
-                                    <span class="input-group-text close-search">
-                                        <i data-feather="x" class="font-light"></i>
-                                    </span>
-                                </div>
+                                <form method="get" action="~/Shop">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i data-feather="search" class="font-light"></i>
+                                        </span>
+                                        <input type="text" class="form-control search-type" placeholder="Tìm kiếm..." name="keyword" required />
+                                        <span class="input-group-text close-search">
+                                            <i data-feather="x" class="font-light"></i>
+                                        </span>
+                                    </div>
+                                </form>
                                 <div class="search-suggestion">
                                     <ul class="custom-scroll">
-                                        <li>
+                                        @*<li>
                                             <div class="product-cart media">
                                                 <img src="~/Content/images/electronics/product/1.jpg"
                                                      class="img-fluid blur-up lazyload" alt="">
@@ -212,7 +220,7 @@
                                                     <p class="mb-0 mt-1">$35.00</p>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -391,6 +399,11 @@
     <script src="~/Content/js/theme-setting.js"></script>
     <script src="~/Content/js/script.js"></script>
 
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </body>
 
 </html>

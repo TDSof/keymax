@@ -15,7 +15,9 @@ namespace KeyMax.Controllers
         // GET: Shop
         public ActionResult Index()
         {
-            ViewData["listProducts"] = QD.GetProductsWithType();
+            string keyword = Request.QueryString["keyword"];
+            if (keyword != null) ViewData["listProducts"] = QD.GetProductsWithType(keyword, 0, 0);
+            else ViewData["listProducts"] = QD.GetProductsWithType("", 0, 0);
             return View();
         }
         public ActionResult Detail(int? id)

@@ -56,12 +56,12 @@
                     </div>
                     <div class="banner-contain mt-3 mb-5">
                         @*<p class="font-light">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen
-                            book. It has survived not only five centuries, but also the leap into electronic
-                            typesetting, remaining essentially unchanged.
-                        </p>*@
+                    Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen
+                    book. It has survived not only five centuries, but also the leap into electronic
+                    typesetting, remaining essentially unchanged.
+                </p>*@
                     </div>
                 </div>
                 <div class="row g-4">
@@ -77,40 +77,13 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li>
-                                                <a class="dropdown-item" href="javascript:void(0)">
-                                                    Alphabetically
-                                                    A-Z
-                                                </a>
+                                                <a class="dropdown-item" href="javascript:void(0)">Mới cập nhật</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="javascript:void(0)">
-                                                    Alphabetically
-                                                    Z-A
-                                                </a>
+                                                <a class="dropdown-item" href="javascript:void(0)">Giá thấp đến cao</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="javascript:void(0)">
-                                                    Price, High To
-                                                    Low
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0)">
-                                                    Price, Low To
-                                                    High
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0)">
-                                                    Date, Old To
-                                                    New
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0)">
-                                                    Date, New To
-                                                    Old
-                                                </a>
+                                                <a class="dropdown-item" href="javascript:void(0)">Giá cao đến thấp</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -122,19 +95,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li>
-                                            <a class="dropdown-item" href="javascript:void(0)">Jeans</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:void(0)">T-Shirt</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:void(0)">Shirt</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:void(0)">Jacket</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:void(0)">Hoodie</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">Test.</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -166,11 +127,11 @@
                                         </a>
                                     </li>
                                     <!--<li class="list-btn">
-                                        <a href="javascript:void(0)">
-                                            <img src="~/Content/svg/list.svg" class="img-fluid blur-up lazyload"
-                                                 alt="">
-                                        </a>
-                                    </li>-->
+                            <a href="javascript:void(0)">
+                                <img src="~/Content/svg/list.svg" class="img-fluid blur-up lazyload"
+                                     alt="">
+                            </a>
+                        </li>-->
                                 </ul>
                             </div>
                         </div>
@@ -178,6 +139,30 @@
                 </div>
                 <!-- label and featured section -->
                 <!-- Prodcut setion -->
+                @if (listProducts.Count == 0)
+                {
+                    <section class="page-not-found section-b-space">
+                        <div class="container">
+                            <div class="row gx-md-2 gx-0 gy-md-0 gy-3">
+                                <div class="col-md-8 m-auto">
+                                    <div class="page-image">
+                                        <img src="~/Content/images/inner-page/404.png" class="img-fluid blur-up lazyload" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 mx-auto mt-md-5 mt-3">
+                                    <div class="page-container pass-forgot">
+                                        <div>
+                                            <h2>Không tìm thấy sản phẩm</h2>
+                                            <p>Hãy thử tìm kiếm một từ khoá khác.</p>
+                                            <a href="~/Home" class="btn btn-solid-default">Trang chủ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                }
                 <div class="row g-sm-4 g-3 row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 gx-sm-4 gx-3 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
                     @foreach (var item in listProducts)
                     {
@@ -191,37 +176,37 @@
                                         </a>
                                     </div>
                                     @*<div class="back">
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/back/1.jpg"
-                                                     class="bg-img blur-up lazyload" alt="">
-                                            </a>
-                                        </div>*@
+                                <a href="product-left-sidebar.html">
+                                    <img src="~/Content/images/fashion/product/back/1.jpg"
+                                         class="bg-img blur-up lazyload" alt="">
+                                </a>
+                            </div>*@
                                     <!--<div class="cart-wrap">
-                                        <ul>
-                                            <li>
-                                                <a href="javascript:void(0)" class="addtocart-btn"
-                                                   data-bs-toggle="modal" data-bs-target="#addtocart">
-                                                    <i data-feather="shopping-bag"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                   data-bs-target="#quick-view">
-                                                    <i data-feather="eye"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="compare.html">
-                                                    <i data-feather="refresh-cw"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="wishlist.html" class="wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>-->
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" class="addtocart-btn"
+                                       data-bs-toggle="modal" data-bs-target="#addtocart">
+                                        <i data-feather="shopping-bag"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                       data-bs-target="#quick-view">
+                                        <i data-feather="eye"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="compare.html">
+                                        <i data-feather="refresh-cw"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="wishlist.html" class="wishlist">
+                                        <i data-feather="heart"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>-->
                                 </div>
                                 <div class="product-details">
                                     <div class="rating-details">

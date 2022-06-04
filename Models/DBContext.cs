@@ -19,6 +19,7 @@ namespace KeyMax.Models
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<carts> carts { get; set; }
         public virtual DbSet<invoice_details> invoice_details { get; set; }
+        public virtual DbSet<reports> reports { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

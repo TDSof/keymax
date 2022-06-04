@@ -1,6 +1,7 @@
-﻿
+﻿@using KeyMax.Models
 @{
     ViewBag.Title = "Trang cá nhân";
+    var user = (users)ViewData["user"];
 }
 
 <!-- Breadcrumb section start -->
@@ -24,7 +25,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index.html">
+                            <a href="~/Home">
                                 <i class="fas fa-home"></i>
                             </a>
                         </li>
@@ -55,11 +56,11 @@
                         </button>
                     </li>
                     @*<li class="nav-item mb-2">
-                        <button class="nav-link font-light" id="2-tab" data-bs-toggle="tab" data-bs-target="#save"
-                                type="button">
-                            <i class="fas fa-angle-right"></i>Saved Address
-                        </button>
-                    </li>*@
+                            <button class="nav-link font-light" id="2-tab" data-bs-toggle="tab" data-bs-target="#save"
+                                    type="button">
+                                <i class="fas fa-angle-right"></i>Saved Address
+                            </button>
+                        </li>*@
                     <li class="nav-item mb-2">
                         <button class="nav-link font-light" id="3-tab" data-bs-toggle="tab"
                                 data-bs-target="#profile" type="button">
@@ -80,7 +81,7 @@
                                     <h2>Tổng quan</h2>
                                 </div>
                                 <div class="welcome-msg">
-                                    <h6 class="font-light">Hello, <span>User !</span></h6>
+                                    <h6 class="font-light">Hello, <span>@user.user_fullname !</span></h6>
                                     <p class="font-light">
                                         From your My Account Dashboard you have the ability to
                                         view a snapshot of your recent account activity and update your account
@@ -150,9 +151,9 @@
                                                     <h4>Thông tin liên hệ</h4>
                                                 </div>
                                                 <div class="box-content">
-                                                    <h6 class="font-light">Nguyễn A</h6>
-                                                    <h6 class="font-light">asd@gmail.com</h6>
-                                                    <a href="javascript:void(0)">Change Password</a>
+                                                    <h6 class="font-light">@user.user_fullname</h6>
+                                                    <h6 class="font-light">@user.user_email</h6>
+                                                    @*<a href="javascript:void(0)">Change Password</a>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -416,113 +417,39 @@
                     </div>
                     <div class="tab-pane fade dashboard-profile dashboard" id="profile">
                         <div class="box-head">
-                            <h3>Profile</h3>
-                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                               data-bs-target="#resetEmail">Edit</a>
+                            <h3>Thông tin cá nhân</h3>
+                            @*<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#resetEmail">Edit</a>*@
                         </div>
-                        <ul class="dash-profile">
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Company Name</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>Voxo Fashion</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Country / Region</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>Downers Grove, IL</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Year Established</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>2018</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Total Employees</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>101 - 200 People</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Category</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>Clothing</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Street Address</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>549 Sulphur Springs Road</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">City/State</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>Downers Grove, IL</h6>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="left">
-                                    <h6 class="font-light">Zip</h6>
-                                </div>
-                                <div class="right">
-                                    <h6>60515</h6>
-                                </div>
-                            </li>
-                        </ul>
-
                         <div class="box-head mt-lg-5 mt-3">
                             <h3>Login Details</h3>
                             <a href="javascript:void(0)" data-bs-toggle="modal"
                                data-bs-target="#resetEmail">Edit</a>
                         </div>
-
                         <ul class="dash-profile">
                             <li>
                                 <div class="left">
-                                    <h6 class="font-light">Email Address</h6>
+                                    <h6 class="font-light">Email</h6>
                                 </div>
                                 <div class="right">
-                                    <h6>mark.jugal@gmail.com</h6>
+                                    <h6>@user.user_email</h6>
                                 </div>
-                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                   data-bs-target="#resetEmail">Edit</a>
                             </li>
-
                             <li>
                                 <div class="left">
-                                    <h6 class="font-light">Phone No.</h6>
+                                    <h6 class="font-light">Số điện thoại</h6>
                                 </div>
                                 <div class="right">
-                                    <h6>+1-202-555-0198</h6>
+                                    <h6>@user.user_phone_number</h6>
                                 </div>
-                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                   data-bs-target="#resetEmail">Edit</a>
                             </li>
-
+                            <li>
+                                <div class="left">
+                                    <h6 class="font-light">Địa chỉ</h6>
+                                </div>
+                                <div class="right">
+                                    <h6>@user.user_address</h6>
+                                </div>
+                            </li>
                             <li class="mb-0">
                                 <div class="left">
                                     <h6 class="font-light">Password</h6>
@@ -531,7 +458,7 @@
                                     <h6>●●●●●●</h6>
                                 </div>
                                 <a href="javascript:void(0)" data-bs-toggle="modal"
-                                   data-bs-target="#resetEmail">Edit</a>
+                                   data-bs-target="#resetPassword">Sửa</a>
                             </li>
                         </ul>
                     </div>
@@ -541,3 +468,71 @@
     </div>
 </section>
 <!-- user dashboard section end -->
+<!-- Reset Info Modal Start -->
+<div class="modal fade reset-email-modal" id="resetEmail">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Đổi thông tin cá nhân</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body pt-3">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label font-light">Họ tên</label>
+                        <input type="text" class="form-control" id="name" name="user_fullname" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="number_phone" class="form-label font-light">Số điện thoại</label>
+                        <input type="text" class="form-control" id="number_phone" name="user_phone_number" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="number_phone" class="form-label font-light">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" name="user_address" />
+                    </div>
+                    @*<div>
+            <label for="exampleInputPassword1" class="form-label font-light">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>*@
+                </form>
+            </div>
+            <div class="modal-footer pt-0">
+                <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Đóng</button>
+                <button class="btn btn-solid-default rounded-1" type="submit">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reset Info Modal End -->
+<!-- Reset Password Modal Start -->
+<div class="modal fade reset-email-modal" id="resetPassword">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body pt-3">
+                <form method="post" action="">
+                    <div class="mb-3">
+                        <label for="pass" class="form-label font-light">Mật khẩu cũ</label>
+                        <input type="password" class="form-control" id="pass" name="password" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="newpass" class="form-label font-light">Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="newpass" name="new_password" required />
+                    </div>
+                    <div>
+                        <label for="renewpass" class="form-label font-light">Xác nhận mật khẩu mới</label>
+                        <input type="password" class="form-control" id="renewpass" name="re_new_password" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer pt-0">
+                <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Đóng</button>
+                <button class="btn btn-solid-default rounded-1" type="submit">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reset Password Modal End -->
