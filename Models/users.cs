@@ -26,7 +26,6 @@ namespace KeyMax.Models
         [StringLength(50)]
         public string user_email { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string user_password { get; set; }
 
@@ -35,6 +34,9 @@ namespace KeyMax.Models
 
         [Column(TypeName = "text")]
         public string user_address { get; set; }
+
+        [StringLength(10)]
+        public string user_login_with { get; set; }
 
         public DateTime? user_created_at { get; set; }
 

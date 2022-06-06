@@ -9,6 +9,9 @@ namespace KeyMax
 {
     public class Func
     {
+        public static string IDClientGoogle = "987251945724-c3uqooemo7p1o1tj1q0v1nha5882hhe6.apps.googleusercontent.com";
+        public static string IDClientFacebook = "559900125477541";
+
         public string NumberToStr(int number)
         {
             return string.Format("{0:n0}", number);

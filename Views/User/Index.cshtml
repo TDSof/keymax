@@ -1,4 +1,4 @@
-﻿@using KeyMax.Models
+﻿
 @{
     ViewBag.Title = "Trang cá nhân";
     var user = (users)ViewData["user"];
@@ -476,30 +476,33 @@
                 <h3 class="modal-title" id="exampleModalLabel">Đổi thông tin cá nhân</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body pt-3">
-                <form>
+            @using (Html.BeginForm("Index", "User", FormMethod.Post))
+            {
+                <div class="modal-body pt-3">
                     <div class="mb-3">
                         <label for="name" class="form-label font-light">Họ tên</label>
-                        <input type="text" class="form-control" id="name" name="user_fullname" required />
+                        <input type="text" class="form-control" id="name" name="user_fullname" value="@user.user_fullname" required />
                     </div>
                     <div class="mb-3">
                         <label for="number_phone" class="form-label font-light">Số điện thoại</label>
-                        <input type="text" class="form-control" id="number_phone" name="user_phone_number" required />
+                        <input type="text" class="form-control" id="number_phone" name="user_phone_number" value="@user.user_phone_number" required />
                     </div>
                     <div class="mb-3">
                         <label for="number_phone" class="form-label font-light">Địa chỉ</label>
-                        <input type="text" class="form-control" id="address" name="user_address" />
+                        <input type="text" class="form-control" id="address" name="user_address" value="@user.user_address" required />
                     </div>
                     @*<div>
-            <label for="exampleInputPassword1" class="form-label font-light">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>*@
-                </form>
-            </div>
-            <div class="modal-footer pt-0">
-                <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Đóng</button>
-                <button class="btn btn-solid-default rounded-1" type="submit">Lưu</button>
-            </div>
+                    <label for="exampleInputPassword1" class="form-label font-light">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>*@
+                </div>
+                <div class="modal-footer pt-0">
+                    <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Đóng</button>
+                    <button class="btn btn-solid-default rounded-1" type="submit">Lưu</button>
+                </div>
+            }
+            @*<form method="post" action="~/User/UpdateUser">
+            </form>*@
         </div>
     </div>
 </div>
@@ -512,8 +515,9 @@
                 <h3 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body pt-3">
-                <form method="post" action="">
+            @using (Html.BeginForm("Index", "User", FormMethod.Post))
+            {
+                <div class="modal-body pt-3">
                     <div class="mb-3">
                         <label for="pass" class="form-label font-light">Mật khẩu cũ</label>
                         <input type="password" class="form-control" id="pass" name="password" required />
@@ -526,12 +530,14 @@
                         <label for="renewpass" class="form-label font-light">Xác nhận mật khẩu mới</label>
                         <input type="password" class="form-control" id="renewpass" name="re_new_password" required />
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer pt-0">
-                <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Đóng</button>
-                <button class="btn btn-solid-default rounded-1" type="submit">Lưu</button>
-            </div>
+                </div>
+                <div class="modal-footer pt-0">
+                    <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Đóng</button>
+                    <button class="btn btn-solid-default rounded-1" type="submit">Lưu</button>
+                </div>
+            }
+            @*<form method="post" action="~/User/ChangePassword">
+        </form>*@
         </div>
     </div>
 </div>

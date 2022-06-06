@@ -4,9 +4,6 @@
     Layout = "~/Views/Shared/_LayoutSign.cshtml";
 }
 
-@if (ViewData["msg"] != null) {
-    <script>alert("@Html.Raw(ViewData["msg"])");</script>
-}
 <!-- Log In Section Start -->
 <div class="login-section">
     <div class="materialContainer">
@@ -25,7 +22,7 @@
                     <input type="password" name="user_password" id="pass" required />
                     <span class="spin"></span>
                 </div>
-                <a href="#" class="pass-forgot">Quên mmật khẩu?</a>
+                <a href="#" class="pass-forgot">Quên mật khẩu?</a>
                 <div class="button login">
                     <button type="submit">
                         <span>Đăng Nhập</span>
@@ -36,23 +33,13 @@
                     <span>Hoặc đăng nhập nhanh với</span>
                 </p>
                 <div class="row gx-md-3 gy-3">
-                    <div class="col-md-6">
-                        <a href="//fb.com" target="_blank">
-                            <div class="social-media fb-media">
-                                <img src="~/Content/images/inner-page/facebook.png"
-                                     class="img-fluid blur-up lazyload" />
-                                <h6>Facebook</h6>
-                            </div>
-                        </a>
+                    <div class="col-md-12 centerBtn">
+                        <div class="fb-login-button" data-width="400" data-size="large" data-button-type="continue_with"
+                             data-auto-logout-link="false" data-use-continue-as="true" data-scope="public_profile,email"
+                             data-onlogin="checkLoginState();"></div>
                     </div>
-                    <div class="col-md-6">
-                        <a href="//google.com" target="_blank">
-                            <div class="social-media google-media">
-                                <img src="~/Content/images/inner-page/google.png"
-                                     class="img-fluid blur-up lazyload" />
-                                <h6>Google</h6>
-                            </div>
-                        </a>
+                    <div class="col-md-12 centerBtn">
+                        <div id="btnGoogle"></div>
                     </div>
                 </div>
                 <p>Chưa có tài khoản? <a href="~/User/Register" class="theme-color">Đăng ký ngay</a></p>

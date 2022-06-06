@@ -31,10 +31,69 @@
     <!-- Theme css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="~/Content/css/demo2.css">
 
+    <style>
+        .centerBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body class="theme-color2 light ltr">
+    <!-- Load thư viện Facebook API -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js"></script>
+    <!-- Load thư viện Google API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function redirectPage(token, from) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('access_token', token);
+            url.searchParams.set('from', from);
+            window.location.href = url.href;
+        }
 
+        // FB
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {      // Lấy trạng thái đăng nhập
+                console.log(response);                   // In thông tin ra màn hình console
+                if (response.status === 'connected') {   // Kiểm tra đã từng đăng nhập app này chưa
+                    console.log('Welcome from FB! Fetching your information...'); // Nếu rồi thì sẽ lấy thông tin của người dùng
+                    redirectPage(FB.getAuthResponse()['accessToken'], 'facebook');
+                }
+            });
+        }
+        // Khởi tạo API
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: "@Func.IDClientFacebook", // ID ứng dụng
+                cookie: true, xfbml: true, version: 'v13.0'
+            });
+        };
+
+        // GG
+        window.onload = function () {
+            // Khởi tạo API
+            google.accounts.id.initialize({
+                client_id: "@Func.IDClientGoogle",
+                callback: function (response) {
+                    console.log('Welcome from GG! Fetching your information...'); // Nếu rồi thì sẽ lấy thông tin của người dùng
+                    redirectPage(response.credential, 'google');
+                }
+            });
+            // Thiết lập nút đăng nhập
+            google.accounts.id.renderButton(
+                document.getElementById("btnGoogle"),
+                { theme: "outline", size: "large", text: "continue_with", width: "400" }  // tuỳ chỉnh nút
+            );
+            // google.accounts.id.prompt(); // khung đăng nhập nhanh ở phía trên bên phải
+        }
+    </script>
+
+    @if (ViewData["msg"] != null)
+    {
+        <script>alert(`@Html.Raw(ViewData["msg"])`);</script>
+    }
     @RenderBody()
 
     <div class="bg-overlay"></div>

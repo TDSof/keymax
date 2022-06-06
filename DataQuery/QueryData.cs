@@ -1,11 +1,23 @@
 ﻿using KeyMax.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace KeyMax.DataQuery
 {
+    public class TokenGoogle
+    {
+        //[JsonProperty(PropertyName = "error_description")]
+        public string error_description { get; set; }
+        //[JsonProperty(PropertyName = "name")]
+        public string name { get; set; }
+        //[JsonProperty(PropertyName = "email")]
+        public string email { get; set; }
+    }
     public class ProductWithType {
         public products Product { get; set; }
         public string ProductTypeName { get; set; }
@@ -64,6 +76,60 @@ namespace KeyMax.DataQuery
                 }
             }
         }
+        public TokenGoogle VerifyTokenGoogle(string token)
+        {
+            TokenGoogle json = new TokenGoogle();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://www.googleapis.com/oauth2/v3/tokeninfo");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //GET Method
+                HttpResponseMessage response = client.GetAsync("?id_token=" + token).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var t = JsonConvert.DeserializeObject<TokenGoogle>(response.Content.ReadAsStringAsync().Result);
+                    if (t.error_description == null)
+                    {
+                        json.name = t.name;
+                        json.email = t.email;
+                    }
+                    else json.error_description = t.error_description;
+                }
+            }
+            return json;
+        }
+        public int LoginWith(string token, string from, out users user)
+        {
+            user = null;
+            if (from.ToLower().Equals("google"))
+            {
+                TokenGoogle data = VerifyTokenGoogle(token);
+                if (data.error_description == null)
+                {
+                    using (var dbContext = new DBContext())
+                    {
+                        users x = dbContext.users.SingleOrDefault(s => s.user_email.Equals(data.email));
+                        if (x == null)
+                        {
+                            x = new users();
+                            x.user_fullname = data.name;
+                            x.user_email = data.email.ToLower();
+                            x.user_created_at = DateTime.Now;
+                            dbContext.users.Add(x);
+                            dbContext.SaveChanges();
+                        }
+                        user = x;
+                        return x.user_id;
+                    }
+                }
+            }
+            else if (from.ToLower().Equals("facebook"))
+            {
+
+            }
+            return 0;
+        }
         public bool ChangePass(int user_id, string pass_old, string pass_new, out string err)
         {
             err = string.Empty;
@@ -109,45 +175,67 @@ namespace KeyMax.DataQuery
                 return x;
             }
         }
-
-        public List<products> GetProducts(string search = "")
+        public bool UpdateUser(users user)
         {
-            using (var dbContext = new DBContext())
+            try
             {
-                if (string.IsNullOrEmpty(search)) return dbContext.products.ToList();
-                else return dbContext.products.Where(oh => oh.product_name.ToLower().Contains(search.ToLower())).ToList();
+                using (var dbContext = new DBContext())
+                {
+                    var userUpdate = dbContext.users.SingleOrDefault(s => s.user_id == user.user_id);
+                    if (userUpdate == null)
+                    {
+                        return false;
+                    }
+                    if (userUpdate.user_fullname != user.user_fullname) userUpdate.user_fullname = user.user_fullname;
+                    //if (userUpdate.user_email != user.user_email) userUpdate.user_email = user.user_email;
+                    if (userUpdate.user_phone_number != user.user_phone_number) userUpdate.user_phone_number = user.user_phone_number;
+                    if (userUpdate.user_address != user.user_address) userUpdate.user_address = user.user_address;
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
-        public List<ProductWithType> GetProductsWithType(string search = "", int page = 1, int limit = 20)
+
+        //public List<products> GetProducts(string search = "")
+        //{
+        //    using (var dbContext = new DBContext())
+        //    {
+        //        if (string.IsNullOrEmpty(search)) return dbContext.products.ToList();
+        //        else return dbContext.products.Where(oh => oh.product_name.ToLower().Contains(search.ToLower())).ToList();
+        //    }
+        //}
+        public List<ProductWithType> GetProductsWithType(string search = "", int order_by = 1, int product_type_id = 0, int page = 1, int limit = 20)
         {
             using (var dbContext = new DBContext())
             {
-                IQueryable<ProductWithType> list = null;
-                if (string.IsNullOrEmpty(search))
+                IQueryable<ProductWithType> list = (from p in dbContext.products
+                                                    join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
+                                                    from pwt in product_with_type.DefaultIfEmpty()
+                                                    select new ProductWithType
+                                                    {
+                                                        Product = p,
+                                                        ProductTypeName = pwt.product_type_name
+                                                    });
+
+                if (!string.IsNullOrEmpty(search)) list = list.Where(w => w.Product.product_name.ToLower().Contains(search.ToLower()));
+                if (product_type_id > 0) list = list.Where(w => w.Product.product_type_id == product_type_id);
+                switch (order_by)
                 {
-                    list = (from p in dbContext.products
-                            join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
-                            from pwt in product_with_type.DefaultIfEmpty()
-                            orderby p.product_id descending
-                            select new ProductWithType
-                            {
-                                Product = p,
-                                ProductTypeName = pwt.product_type_name
-                            });
+                    case 2:
+                        list = list.OrderBy(o => o.Product.product_price);
+                        break;
+                    case 3:
+                        list = list.OrderByDescending(o => o.Product.product_price);
+                        break;
+                    default:
+                        list = list.OrderByDescending(o => o.Product.product_id);
+                        break;
                 }
-                else
-                {
-                    list = (from p in dbContext.products
-                            join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
-                            from pwt in product_with_type.DefaultIfEmpty()
-                            where p.product_name.ToLower().Contains(search.ToLower())
-                            orderby p.product_id descending
-                            select new ProductWithType
-                            {
-                                Product = p,
-                                ProductTypeName = pwt.product_type_name
-                            });
-                }
+
                 if (limit == 0) return list.ToList();
                 else return list.Skip((page - 1) *  limit).Take(limit).ToList();
             }
@@ -174,20 +262,11 @@ namespace KeyMax.DataQuery
                         }).FirstOrDefault();
             }
         }
-        public List<ProductWithType> GetProductsWithTypeByProductTypeId(int product_type_id, int page = 1, int limit = 10)
+        public List<product_types> GetProductTypes()
         {
             using (var dbContext = new DBContext())
             {
-                return (from p in dbContext.products
-                    join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
-                    from pwt in product_with_type.DefaultIfEmpty()
-                    where p.product_type_id == product_type_id
-                    orderby p.product_id descending
-                    select new ProductWithType
-                    {
-                        Product = p,
-                        ProductTypeName = pwt.product_type_name
-                    }).Take(limit).ToList();
+                return dbContext.product_types.ToList();
             }
         }
     }

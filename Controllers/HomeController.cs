@@ -13,7 +13,7 @@ namespace KeyMax.Controllers
 
         public ActionResult Index()
         {
-            ViewData["listProducts"] = QD.GetProductsWithType("", 1, 8);
+            ViewData["listProducts"] = QD.GetProductsWithType("", 1, 0, 1, 8);
             return View();
         }
 
