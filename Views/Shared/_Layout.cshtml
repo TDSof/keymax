@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    Session["listCart"] = Session["listCart"] == null ? new List<Cart>() : Session["listCart"];
+}
+
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -142,7 +146,7 @@
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown cart-dropdown">
-                                        <button onclick="location.href = 'cart.html';" type="button" class="btn btn-solid-default btn-spacing">
+                                        <button onclick="location.href = '/Cart';" type="button" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
                                             <span>Cart</span>
                                         </button>
@@ -397,7 +401,8 @@
     <script src="~/Content/js/timer1.js"></script>
 
     <!-- notify js -->
-    <script src="~/Content/js/bootstrap/bootstrap-notify.min.js"></script>
+    @*<script src="~/Content/js/bootstrap/bootstrap-notify.min.js"></script>*@
+    <script src="//rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
 
     <!-- script js -->
     <script src="~/Content/js/theme-setting.js"></script>
@@ -419,6 +424,22 @@
         //        redirectParams('order_by', document.getElementById('order_by').value);
         //    };
         //} catch (e) { }
+        function add_to_cart(product_id, cart_product_quantity = 1) {
+            $.ajax({
+                type: "POST",
+                url: "/api2/Cart/Index/" + product_id + "?cart_product_quantity=" + cart_product_quantity,
+                // data: q,
+                success: function (result) {
+                    if (result.success) $.notify("Đã thêm vào giỏ hàng!", "success");
+                    else $.notify("Vui lòng đăng nhập để thêm vào giỏ hàng!", "error");
+                }
+            });
+        }
+
+        function add_to_cart_(product_id) {
+            add_to_cart(product_id, $('#product_quantity').val());
+            return false;
+        }
     </script>
 </body>
 

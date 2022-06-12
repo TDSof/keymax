@@ -11,7 +11,6 @@ namespace KeyMax.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public products()
         {
-            carts = new HashSet<carts>();
             invoice_details = new HashSet<invoice_details>();
         }
 
@@ -34,12 +33,9 @@ namespace KeyMax.Models
         [Column(TypeName = "ntext")]
         public string product_description { get; set; }
 
-        public virtual product_types product_types { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<carts> carts { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<invoice_details> invoice_details { get; set; }
+
+        public virtual product_types product_types { get; set; }
     }
 }

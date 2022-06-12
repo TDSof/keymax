@@ -9,6 +9,11 @@ using System.Web;
 
 namespace KeyMax.DataQuery
 {
+    public class ReturnApi
+    {
+        public bool success { get; set; }
+        public object data { get; set; }
+    }
     public class TokenGoogle
     {
         //[JsonProperty(PropertyName = "error_description")]
@@ -19,9 +24,29 @@ namespace KeyMax.DataQuery
         public string email { get; set; }
     }
     public class ProductWithType {
-        public products Product { get; set; }
-        public string ProductTypeName { get; set; }
+        public int product_id { get; set; }
+        public string product_name { get; set; }
+        public int? product_type_id { get; set; }
+        public int product_price { get; set; }
+        public string product_img { get; set; }
+        public int? product_quantity { get; set; }
+        public string product_description { get; set; }
+        public string product_type_name { get; set; }
     }
+    public class Cart
+    {
+        public int? user_id { get; set; }
+        public ProductWithType product { get; set; }
+        public int cart_product_quantity { get; set; }
+        public Cart() { }
+        public Cart(int product_id)
+        {
+            product = new ProductWithType();
+            product.product_id = product_id;
+            cart_product_quantity = 1;
+        }
+    }
+
     public class QueryData
     {
         Func f = new Func();
@@ -194,7 +219,7 @@ namespace KeyMax.DataQuery
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -217,22 +242,28 @@ namespace KeyMax.DataQuery
                                                     from pwt in product_with_type.DefaultIfEmpty()
                                                     select new ProductWithType
                                                     {
-                                                        Product = p,
-                                                        ProductTypeName = pwt.product_type_name
+                                                        product_id = p.product_id,
+                                                        product_name = p.product_name,
+                                                        product_type_id = p.product_type_id,
+                                                        product_price = p.product_price,
+                                                        product_img = p.product_img,
+                                                        product_quantity = p.product_quantity,
+                                                        product_description = p.product_description,
+                                                        product_type_name = pwt.product_type_name
                                                     });
 
-                if (!string.IsNullOrEmpty(search)) list = list.Where(w => w.Product.product_name.ToLower().Contains(search.ToLower()));
-                if (product_type_id > 0) list = list.Where(w => w.Product.product_type_id == product_type_id);
+                if (!string.IsNullOrEmpty(search)) list = list.Where(w => w.product_name.ToLower().Contains(search.ToLower()));
+                if (product_type_id > 0) list = list.Where(w => w.product_type_id == product_type_id);
                 switch (order_by)
                 {
                     case 2:
-                        list = list.OrderBy(o => o.Product.product_price);
+                        list = list.OrderBy(o => o.product_price);
                         break;
                     case 3:
-                        list = list.OrderByDescending(o => o.Product.product_price);
+                        list = list.OrderByDescending(o => o.product_price);
                         break;
                     default:
-                        list = list.OrderByDescending(o => o.Product.product_id);
+                        list = list.OrderByDescending(o => o.product_id);
                         break;
                 }
 
@@ -257,16 +288,59 @@ namespace KeyMax.DataQuery
                         where p.product_id == product_id
                         select new ProductWithType
                         {
-                            Product = p,
-                            ProductTypeName = pwt.product_type_name
+                            product_id = p.product_id,
+                            product_name = p.product_name,
+                            product_type_id = p.product_type_id,
+                            product_price = p.product_price,
+                            product_img = p.product_img,
+                            product_quantity = p.product_quantity,
+                            product_description = p.product_description,
+                            product_type_name = pwt.product_type_name
                         }).FirstOrDefault();
             }
+            //Product = new products
+            //{
+            //    product_id = p.product_id,
+            //    product_name = p.product_name,
+            //    product_type_id = p.product_type_id,
+            //    product_price = p.product_price,
+            //    product_img = p.product_img,
+            //    product_quantity = p.product_quantity,
+            //    product_description = p.product_description
+            //},
         }
         public List<product_types> GetProductTypes()
         {
             using (var dbContext = new DBContext())
             {
                 return dbContext.product_types.ToList();
+            }
+        }
+
+        public List<Cart> GetCart(List<Cart> listCart)
+        {
+            using (var dbContext = new DBContext())
+            {
+                return (from c in listCart
+                        join p1 in dbContext.products on c.product.product_id equals p1.product_id into products
+                        from p in products
+                        join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
+                        from pwt in product_with_type.DefaultIfEmpty()
+                        select new Cart
+                        {
+                            product = new ProductWithType
+                            {
+                                product_id = p.product_id,
+                                product_name = p.product_name,
+                                product_type_id = p.product_type_id,
+                                product_price = p.product_price,
+                                product_img = p.product_img,
+                                product_quantity = p.product_quantity,
+                                product_description = p.product_description,
+                                product_type_name = pwt.product_type_name
+                            },
+                            cart_product_quantity = c.cart_product_quantity
+                        }).ToList();
             }
         }
     }

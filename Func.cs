@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -59,6 +60,16 @@ namespace KeyMax
                 }
                 return sb.ToString();
             }
+        }
+
+        public JsonSerializerSettings JsonSetting()
+        {
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented,
+
+            };
         }
     }
 }

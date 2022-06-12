@@ -2,7 +2,7 @@
 @{
     var product = (ProductWithType)ViewData["product"];
     var productRelated = (List<ProductWithType>)ViewData["productRelated"];
-    ViewBag.Title = "Sản phẩm " + product.Product.product_name;
+    ViewBag.Title = "Sản phẩm " + product.product_name;
     Func f = new Func();
 }
 
@@ -64,7 +64,7 @@
                                 <div class="details-image ratio_asos">
                                     <div>
                                         <div class="product-image-tag">
-                                            <img src="@product.Product.product_img" id="zoom_01" data-zoom-image="@product.Product.product_img"
+                                            <img src="@product.product_img" id="zoom_01" data-zoom-image="@product.product_img"
                                                  class="img-fluid w-100 image_zoom_cls-0 blur-up lazyload" alt="">
                                             @*<div class="label-tag">
                                                 <h6>
@@ -114,7 +114,7 @@
 
                                 <div class="details-image-option black-slide mt-4 rounded">
                                     <div>
-                                        <img src="@product.Product.product_img" class="img-fluid blur-up lazyload"
+                                        <img src="@product.product_img" class="img-fluid blur-up lazyload"
                                              alt="">
                                     </div>
                                     @*<div>
@@ -153,15 +153,15 @@
                                 </div>
 
                                 <div class="details-image-concept">
-                                    <h2>@product.Product.product_name</h2>
+                                    <h2>@product.product_name</h2>
                                 </div>
 
                                 <div class="label-section">
                                     <span class="badge badge-grey-color">#1 Best seller</span>
-                                    <span class="label-text">trong danh mục @product.ProductTypeName</span>
+                                    <span class="label-text">trong danh mục @product.product_type_name</span>
                                 </div>
 
-                                <h3 class="price-detail">@f.NumberToStr(product.Product.product_price) đ</h3>
+                                <h3 class="price-detail">@f.NumberToStr(product.product_price) đ</h3>
 
                                 <div id="selectSize" class="addeffect-section product-description border-product">
                                     <h6 class="product-title product-title-2 d-block">quantity</h6>
@@ -174,7 +174,7 @@
                                                 </button>
                                             </span>
                                             <input type="number" name="quantity" class="form-control input-number"
-                                                   value="1" min="1" />
+                                                   id="product_quantity" value="1" min="1" />
                                             <span class="input-group-prepend">
                                                 <button type="button" class="btn quantity-right-plus"
                                                         data-type="plus" data-field="">
@@ -186,7 +186,7 @@
                                 </div>
 
                                 <div class="product-buttons">
-                                    <a href="javascript:void(0)" id="cartEffect"
+                                    <a href="javascript:void(0)" id="cartEffect" onclick="add_to_cart_(@product.product_id)"
                                        class="btn btn-solid hover-solid btn-animation">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Thêm vào giỏ hàng</span>
@@ -248,7 +248,12 @@
                         <div class="tab-pane fade show active" id="desc">
                             <div class="shipping-chart">
                                 <div class="part">
-                                    <p class="font-light"><span style="white-space: pre-line">@product.Product.product_description.Replace("\\n", "\n")</span></p>
+                                    <p class="font-light"><span style="white-space: pre-line">
+                                        @if (product.product_description != null)
+                                        {
+                                            @product.product_description.Replace("\\n", "\n")
+                                        }
+                                        </span></p>
                                 </div>
                             </div>
                         </div>
@@ -262,7 +267,7 @@
                                         </tr>
                                         <tr>
                                             <th>Danh mục</th>
-                                            <td>@product.ProductTypeName</td>
+                                            <td>@product.product_type_name</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -288,8 +293,8 @@
                             <div class="product-box">
                                 <div class="img-wrapper">
                                     <div class="front">
-                                        <a href="~/Shop/Detail/@item.Product.product_id">
-                                            <img src="@item.Product.product_img"
+                                        <a href="~/Shop/Detail/@item.product_id">
+                                            <img src="@item.product_img"
                                                  class="bg-img blur-up lazyload" alt="">
                                         </a>
                                     </div>
@@ -318,7 +323,7 @@
                                 </div>
                                 <div class="product-details">
                                     <div class="rating-details">
-                                        <span class="font-light grid-content">@item.ProductTypeName</span>
+                                        <span class="font-light grid-content">@item.product_type_name</span>
                                         @*<ul class="rating mt-0">
                                             <li>
                                                 <i class="fas fa-star theme-color"></i>
@@ -338,8 +343,8 @@
                                         </ul>*@
                                     </div>
                                     <div class="main-price">
-                                        <a href="~/Shop/Detail/@item.Product.product_id" class="font-default">
-                                            <h5>@item.Product.product_name</h5>
+                                        <a href="~/Shop/Detail/@item.product_id" class="font-default">
+                                            <h5>@item.product_name</h5>
                                         </a>
                                         <div class="listing-content">
                                             <span class="font-light">Regular Fit</span>
@@ -351,7 +356,7 @@
                                                 accusantium architecto placeat quam officia, tempore repellendus.
                                             </p>
                                         </div>
-                                        <h3 class="theme-color">@f.NumberToStr(item.Product.product_price)đ</h3>
+                                        <h3 class="theme-color">@f.NumberToStr(item.product_price)đ</h3>
                                         <button class="btn listing-content">Thêm vào giỏ hàng</button>
                                     </div>
                                 </div>

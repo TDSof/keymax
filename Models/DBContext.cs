@@ -12,14 +12,13 @@ namespace KeyMax.Models
         {
         }
 
+        public virtual DbSet<invoice_details> invoice_details { get; set; }
         public virtual DbSet<invoices> invoices { get; set; }
         public virtual DbSet<product_types> product_types { get; set; }
         public virtual DbSet<products> products { get; set; }
+        public virtual DbSet<reports> reports { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
-        public virtual DbSet<carts> carts { get; set; }
-        public virtual DbSet<invoice_details> invoice_details { get; set; }
-        public virtual DbSet<reports> reports { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -41,11 +40,6 @@ namespace KeyMax.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<products>()
-                .HasMany(e => e.carts)
-                .WithRequired(e => e.products)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<products>()
                 .HasMany(e => e.invoice_details)
                 .WithRequired(e => e.products)
                 .WillCascadeOnDelete(false);
@@ -56,11 +50,6 @@ namespace KeyMax.Models
 
             modelBuilder.Entity<users>()
                 .HasMany(e => e.invoices)
-                .WithRequired(e => e.users)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<users>()
-                .HasMany(e => e.carts)
                 .WithRequired(e => e.users)
                 .WillCascadeOnDelete(false);
         }

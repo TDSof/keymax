@@ -208,8 +208,8 @@
                             <div class="product-box">
                                 <div class="img-wrapper">
                                     <div class="front">
-                                        <a href="~/Shop/Detail/@item.Product.product_id">
-                                            <img src="@item.Product.product_img" class="bg-img blur-up lazyload" alt="">
+                                        <a href="~/Shop/Detail/@item.product_id">
+                                            <img src="@item.product_img" class="bg-img blur-up lazyload" alt="">
                                         </a>
                                     </div>
                                     @*<div class="label-block">
@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="product-details">
                                     <div class="rating-details">
-                                        <span class="font-light grid-content">@item.ProductTypeName</span>
+                                        <span class="font-light grid-content">@item.product_type_name</span>
                                         <ul class="rating mt-0">
                                             @*<li>
                                                 <i class="fas fa-star theme-color"></i>
@@ -255,8 +255,8 @@
                                         </ul>
                                     </div>
                                     <div class="main-price">
-                                        <a href="~/Shop/Detail/@item.Product.product_id" class="font-default">
-                                            <h5>@item.Product.product_name</h5>
+                                        <a href="~/Shop/Detail/@item.product_id" class="font-default">
+                                            <h5>@item.product_name</h5>
                                         </a>
                                         <div class="listing-content">
                                             <span class="font-light">Jacket</span>
@@ -268,7 +268,7 @@
                                                 accusantium architecto placeat quam officia, tempore repellendus.
                                             </p>
                                         </div>
-                                        <h3 class="theme-color">@f.NumberToStr(item.Product.product_price)đ</h3>
+                                        <h3 class="theme-color">@f.NumberToStr(item.product_price)đ</h3>
                                         <button class="btn listing-content">Thêm vào giỏ hàng</button>
                                     </div>
                                 </div>

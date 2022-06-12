@@ -9,21 +9,18 @@ namespace KeyMax.Models
     public partial class reports
     {
         [Key]
-        [Column(Order = 0)]
         public int report_id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [StringLength(50)]
         public string report_fullname { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(50)]
         public string report_email { get; set; }
 
-        [Key]
-        [Column(Order = 3, TypeName = "ntext")]
+        [Column(TypeName = "ntext")]
+        [Required]
         public string report_content { get; set; }
     }
 }

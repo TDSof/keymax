@@ -18,14 +18,8 @@ namespace KeyMax.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int product_id { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int invd_product_quantity { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int invd_product_price { get; set; }
 
         public virtual invoices invoices { get; set; }
