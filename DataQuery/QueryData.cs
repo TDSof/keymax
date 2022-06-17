@@ -9,11 +9,6 @@ using System.Web;
 
 namespace KeyMax.DataQuery
 {
-    public class ReturnApi
-    {
-        public bool success { get; set; }
-        public object data { get; set; }
-    }
     public class TokenGoogle
     {
         //[JsonProperty(PropertyName = "error_description")]
@@ -22,29 +17,6 @@ namespace KeyMax.DataQuery
         public string name { get; set; }
         //[JsonProperty(PropertyName = "email")]
         public string email { get; set; }
-    }
-    public class ProductWithType {
-        public int product_id { get; set; }
-        public string product_name { get; set; }
-        public int? product_type_id { get; set; }
-        public int product_price { get; set; }
-        public string product_img { get; set; }
-        public int? product_quantity { get; set; }
-        public string product_description { get; set; }
-        public string product_type_name { get; set; }
-    }
-    public class Cart
-    {
-        public int? user_id { get; set; }
-        public ProductWithType product { get; set; }
-        public int cart_product_quantity { get; set; }
-        public Cart() { }
-        public Cart(int product_id)
-        {
-            product = new ProductWithType();
-            product.product_id = product_id;
-            cart_product_quantity = 1;
-        }
     }
 
     public class QueryData

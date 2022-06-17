@@ -8,14 +8,13 @@ using System.Web.Mvc;
 
 namespace KeyMax.Controllers
 {
-    public class CartController : Controller
+    public class CheckoutController : Controller
     {
         Func f = new Func();
         QueryData QD = new QueryData();
 
         public List<Cart> GetCart()
         {
-
             List<Cart> listCart = (List<Cart>)Session["listCart"];
             if (listCart == null)
             {
@@ -25,14 +24,19 @@ namespace KeyMax.Controllers
             Session["listCart"] = listCart;
             return listCart;
         }
-        // GET: Cart
+        // GET: Checkout
         public ActionResult Index()
         {
             if (Session["user_id"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
-            ViewData["listCart"] = GetCart();
+
+            List<Cart> listCart = GetCart();
+            int count = listCart.Count;
+            if (count == 0) RedirectToAction("Index", "Shop");
+            ViewData["listCart"] = listCart;
+            ViewData["user"] = QD.GetUser((int)Session["user_id"]);
             return View();
         }
     }

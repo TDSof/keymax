@@ -1,4 +1,5 @@
 ﻿using KeyMax.DataQuery;
+using KeyMax.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -35,15 +36,61 @@ namespace KeyMax.Areas.Api2.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(int? id)
+        public ActionResult Add(int? id)
         {
             ReturnApi msg = new ReturnApi { success = false };
-            if (id != null) {
+            if (id != null)
+            {
+                int.TryParse(Request.QueryString["cart_product_quantity"], out int quantity);
+
                 List<Cart> listCart = GetCart();
                 Cart sp = listCart.Find(f => f.product.product_id == id);
-                if (sp == null) listCart.Add(new Cart((int)id));
-                else sp.cart_product_quantity++;
+                if (sp == null) listCart.Add(new Cart((int)id, quantity));
+                else
+                {
+                    if (quantity > 0) sp.cart_product_quantity += quantity;
+                    else sp.cart_product_quantity++;
+                }
                 msg.success = true;
+            }
+            ViewData["listCart"] = JsonConvert.SerializeObject(msg);
+            Response.ContentType = "application/json";
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Update(int? id)
+        {
+            ReturnApi msg = new ReturnApi { success = false };
+            if (id != null)
+            {
+                List<Cart> listCart = GetCart();
+                Cart sp = listCart.Find(f => f.product.product_id == id);
+                if (sp != null) {
+                    if (int.TryParse(Request.QueryString["cart_product_quantity"], out int quantity))
+                    {
+                        if (quantity > 0) sp.cart_product_quantity = quantity;
+                        else listCart.Remove(sp);
+                    }
+                }
+                msg.success = true;
+            }
+            ViewData["listCart"] = JsonConvert.SerializeObject(msg);
+            Response.ContentType = "application/json";
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Remove(int? id)
+        {
+            ReturnApi msg = new ReturnApi { success = false };
+            if (id != null)
+            {
+                List<Cart> listCart = GetCart();
+                Cart sp = listCart.Find(f => f.product.product_id == id);
+                if (sp != null)
+                {
+                    listCart.Remove(sp);
+                    msg.success = true;
+                }
             }
             ViewData["listCart"] = JsonConvert.SerializeObject(msg);
             Response.ContentType = "application/json";

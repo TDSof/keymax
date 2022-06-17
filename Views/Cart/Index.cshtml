@@ -72,7 +72,7 @@
                     {
                         int subtotal = (int)item.cart_product_quantity * item.product.product_price;
                         total += subtotal;
-                        <tbody>
+                        <tbody id="product_@item.product.product_id">
                             <tr>
                                 <td>
                                     <a href="product-left-sidebar.html">
@@ -81,43 +81,24 @@
                                 </td>
                                 <td>
                                     <a href="~/Shop/Detail/@item.product.product_id">@item.product.product_name</a>
-                                    <div class="mobile-cart-content row">
-                                        <div class="col">
-                                            <div class="qty-box">
-                                                <div class="input-group">
-                                                    <input type="text" name="quantity" class="form-control input-number" value="@item.cart_product_quantity" min="1" max="@item.product.product_quantity" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <h2>@f.NumberToStr(item.product.product_price)</h2>
-                                        </div>
-                                        <div class="col">
-                                            <h2 class="td-color">
-                                                <a href="javascript:void(0)">
-                                                    <i class="fas fa-times"></i>
-                                                </a>
-                                            </h2>
-                                        </div>
-                                    </div>
                                 </td>
                                 <td>
-                                    <h2>@f.NumberToStr(item.product.product_price)</h2>
+                                    <h2 class="product_price" id="product_price_@item.product.product_id" data-price="@item.product.product_price">@f.NumberToStr(item.product.product_price)</h2>
                                 </td>
                                 <td>
                                     <div class="qty-box">
                                         <div class="input-group">
-                                            <input type="text" name="quantity" class="form-control input-number" value="@item.cart_product_quantity" min="1" max="@item.product.product_quantity" />
+                                            <input type="number" name="quantity" class="form-control input-number" id="product_quantity_@item.product.product_id" value="@item.cart_product_quantity" onchange="update_cart(@item.product.product_id, this.value)" min="1" max="@item.product.product_quantity" />
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)">
+                                    <a href="javascript:void(0)" onclick="delete_from_cart(@item.product.product_id)">
                                         <i class="fas fa-times"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <h2 class="td-color">@f.NumberToStr(subtotal)</h2>
+                                    <h2 class="td-color" id="product_subtotal_@item.product.product_id">@f.NumberToStr(subtotal)đ</h2>
                                 </td>
                             </tr>
                         </tbody>
@@ -138,7 +119,7 @@
                     </div>
                     <div class="col-sm-5 col-7">
                         <div class="left-side-button float-start">
-                            <a href="index.html" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
+                            <a href="~/Shop" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
                                 <i class="fas fa-arrow-left"></i>Tiếp tục mua hàng
                             </a>
                         </div>
@@ -175,12 +156,19 @@
                                 <div class="total-details">
                                     <div class="top-details">
                                         <h3>Tổng đơn hàng</h3>
-                                        <h6>Tạm tính <span>@f.NumberToStr(total)</span></h6>
+                                        <h6>Tạm tính <span id="cart_subtotal">@f.NumberToStr(total)đ</span></h6>
                                         @*<h6>Coupon Discount <span>-$25.00</span></h6>
                                         <h6>Convenience Fee <span><del>$25.00</del></span></h6>*@
                                     </div>
                                     <div class="bottom-details">
-                                        <a href="checkout.html">Truy cập Thanh toán</a>
+                                        @{
+                                            string checkout = "javascript:void();";
+                                            if (total > 0)
+                                            {
+                                                checkout = "/Checkout";
+                                            }
+                                        }
+                                        <a href="@checkout">Truy cập Thanh toán</a>
                                     </div>
                                 </div>
                             </div>

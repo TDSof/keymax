@@ -185,6 +185,7 @@
     <Compile Include="Areas\Api2\Api2AreaRegistration.cs" />
     <Compile Include="Areas\Api2\Controllers\CartController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -196,12 +197,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Models\invoices.cs" />
     <Compile Include="Models\invoice_details.cs" />
     <Compile Include="Models\products.cs" />
+    <Compile Include="Models\ProductWithType.cs" />
     <Compile Include="Models\product_types.cs" />
     <Compile Include="Models\reports.cs" />
+    <Compile Include="Models\ReturnApi.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -541,6 +545,9 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Api2\Views\web.config" />
     <Content Include="Areas\Api2\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Api2\Views\Cart\Add.cshtml" />
+    <Content Include="Areas\Api2\Views\Cart\Update.cshtml" />
+    <Content Include="Areas\Api2\Views\Cart\Remove.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -575,6 +582,7 @@
     <Content Include="Views\Shop\Detail.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

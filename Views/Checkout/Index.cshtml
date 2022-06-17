@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "Thanh toán";
+    Func f = new Func();
+    users u = (users)ViewData["user"];
+    List<Cart> listCart = (List<Cart>)ViewData["listCart"];
+    int total = 0;
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Checkout</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+<!-- Cart Section Start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Chi tiết thanh toán</h3>
+                <form class="needs-validation" method="post" action="">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label for="fname" class="form-label">Họ tên</label>
+                            <input type="text" class="form-control" id="fname" placeholder="Nhập họ tên" value="@u.user_fullname" name="user_fullname" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lname" class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control" id="lname" placeholder="Nhập số điện thoại" value="@u.user_phone_number" name="user_phone_number" required />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="example@example.com" value="@u.user_email" name="user_email" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label for="address" class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" aria-describedby="emailHelp" value="@u.user_address" name="user_address"
+                                   placeholder="1234 Main St" required />
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-check ps-0 mt-3 custome-form-check">
+                        <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault11">
+                        <label class="form-check-label checkout-label" for="flexCheckDefault11">
+                            Save this
+                            information for next time
+                        </label>
+                    </div>*@
+
+                    @*<hr class="my-lg-5 my-4">*@
+
+                    @*<h3 class="mb-3">Payment</h3>
+                    <div class="d-block my-3">
+                        <div class="form-check custome-radio-box">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="credit">
+                            <label class="form-check-label" for="credit">Credit card</label>
+                        </div>
+
+                        <div class="form-check custome-radio-box">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="debit">
+                            <label class="form-check-label" for="debit">Debit card</label>
+                        </div>
+
+                        <div class="form-check custome-radio-box">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="paypal">
+                            <label class="form-check-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label for="cc-name" class="form-label">Name on card</label>
+                            <input type="text" class="form-control" id="cc-name">
+                            <div id="emailHelp" class="form-text">Full name as displayed on card</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cc-number" class="form-label">Credit card number</label>
+                            <input type="text" class="form-control" id="cc-number" required="">
+                            <div class="invalid-feedback">Credit card number is required</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="expiration" class="form-label">Expiration</label>
+                            <input type="text" class="form-control" id="expiration">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="cc-cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cc-cvv">
+                        </div>
+                    </div>*@
+                    <button class="btn btn-solid-default mt-4" type="submit">Thanh toán</button>
+                </form>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="your-cart-box">
+                    <h3 class="mb-3 d-flex text-capitalize">
+                        Giỏ hàng<span class="badge bg-theme new-badge rounded-pill ms-auto bg-dark">3</span>
+                    </h3>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">Tên sản phẩm</h6>
+                                <small>Số lượng</small>
+                            </div>
+                            <span>Giá</span>
+                        </li>
+                        @foreach (var item in listCart)
+                        {
+                            int subtotal = item.cart_product_quantity * item.product.product_price;
+                            total += subtotal;
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">@item.product.product_name</h6>
+                                    <small>x @item.cart_product_quantity</small>
+                                </div>
+                                <span>@f.NumberToStr(subtotal)</span>
+                            </li>
+                        }
+                        @*<li class="list-group-item d-flex justify-content-between lh-condensed active">
+            <div class="text-dark">
+                <h6 class="my-0">Promo code</h6>
+                <small>EXAMPLECODE</small>
+            </div>
+            <span>-$5</span>
+        </li>*@
+                        <li class="list-group-item d-flex lh-condensed justify-content-between">
+                            <span class="fw-bold">Tổng cộng</span>
+                            <strong>@f.NumberToStr(total)</strong>
+                        </li>
+                    </ul>
+
+                    <form class="card border-0">
+                        <div class="input-group custome-imput-group">
+                            <input type="text" class="form-control" placeholder="Promo code">
+                            <div class="input-group-append">
+                                <button type="reset" class="btn btn-solid-default rounded-0">Redeem</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Cart Section End -->
