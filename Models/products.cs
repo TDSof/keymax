@@ -33,6 +33,8 @@ namespace KeyMax.Models
         [Column(TypeName = "ntext")]
         public string product_description { get; set; }
 
+        public short? product_published { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<invoice_details> invoice_details { get; set; }
 

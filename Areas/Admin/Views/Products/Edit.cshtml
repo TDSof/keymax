@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var listPT = (List<product_types>)ViewData["listPT"];
+    ProductWithType p = (ProductWithType)ViewData["product"];
+
+    string isChecked = "";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header-2">
+                            <h5>Sửa sản phẩm</h5>
+                        </div>
+
+                        <form class="theme-form theme-form-2 mega-form" method="post" action="">
+                            <div class="row">
+                                <div class="mb-4 row align-items-center">
+                                    <label class="form-label-title col-sm-2 mb-0">Tên sản phẩm</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" value="@p.product_name" name="product_name" required />
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label class="col-sm-2 col-form-label form-label-title">Loại sản phẩm</label>
+                                    <div class="col-sm-10">
+                                        <select class="js-example-basic-single w-100" name="product_type_id">
+                                            @foreach (var item in listPT)
+                                            {
+                                                string isSelected = "";
+                                                if (item.product_type_id == p.product_type_id)
+                                                {
+                                                    isSelected = "selected";
+                                                }
+                                                <option value="@item.product_type_id" @isSelected>@item.product_type_name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label class="form-label-title col-sm-2 mb-0">Giá</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="number" value="@p.product_price" name="product_price" required />
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label class="form-label-title col-sm-2 mb-0">Ảnh</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" value="@p.product_img" name="product_img" required />
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label class="form-label-title col-sm-2 mb-0">Số lượng</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="number" min="0" value="@p.product_quantity" name="product_quantity" required />
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label class="form-label-title col-sm-2 mb-0">Mô tả</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" name="product_description">@p.product_description</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label class="form-label-title col-sm-2 mb-0">Công khai</label>
+                                    <div class="col-md-10">
+                                        <div class="form-check user-checkbox ps-0">
+                                            @if (p.product_published == 1)
+                                            {
+                                                isChecked = "checked";
+                                            }
+                                            <input class="checkbox_animated check-it" type="checkbox" value="1" @isChecked />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer text-end border-0 pt-0">
+                                    <button class="btn btn-primary me-3" type="submit">Cập nhật</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

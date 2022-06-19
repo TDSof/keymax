@@ -17,7 +17,6 @@ namespace KeyMax.Models
         public virtual DbSet<product_types> product_types { get; set; }
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<reports> reports { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

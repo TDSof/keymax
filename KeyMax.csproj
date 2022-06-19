@@ -180,8 +180,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Api2\Api2AreaRegistration.cs" />
     <Compile Include="Areas\Api2\Controllers\CartController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -206,7 +205,6 @@
     <Compile Include="Models\product_types.cs" />
     <Compile Include="Models\reports.cs" />
     <Compile Include="Models\ReturnApi.cs" />
-    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -541,13 +539,14 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
     <Content Include="Areas\Api2\Views\web.config" />
     <Content Include="Areas\Api2\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Api2\Views\Cart\Add.cshtml" />
     <Content Include="Areas\Api2\Views\Cart\Update.cshtml" />
     <Content Include="Areas\Api2\Views\Cart\Remove.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -589,7 +588,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Api2\Data\" />
     <Folder Include="Areas\Api2\Views\Shared\" />
-    <Folder Include="Views\Api\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

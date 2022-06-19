@@ -15,5 +15,6 @@ namespace KeyMax.Models
         public int? product_quantity { get; set; }
         public string product_description { get; set; }
         public string product_type_name { get; set; }
+        public short? product_published { get; set; }
     }
 }

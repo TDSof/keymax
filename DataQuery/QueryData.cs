@@ -205,7 +205,7 @@ namespace KeyMax.DataQuery
         //        else return dbContext.products.Where(oh => oh.product_name.ToLower().Contains(search.ToLower())).ToList();
         //    }
         //}
-        public List<ProductWithType> GetProductsWithType(string search = "", int order_by = 1, int product_type_id = 0, int page = 1, int limit = 20)
+        public List<ProductWithType> GetProductsWithType(string search = "", int order_by = 1, int product_type_id = 0, int page = 1, int limit = 20, int product_published = 1)
         {
             using (var dbContext = new DBContext())
             {
@@ -221,11 +221,13 @@ namespace KeyMax.DataQuery
                                                         product_img = p.product_img,
                                                         product_quantity = p.product_quantity,
                                                         product_description = p.product_description,
-                                                        product_type_name = pwt.product_type_name
+                                                        product_type_name = pwt.product_type_name,
+                                                        product_published = p.product_published
                                                     });
 
                 if (!string.IsNullOrEmpty(search)) list = list.Where(w => w.product_name.ToLower().Contains(search.ToLower()));
                 if (product_type_id > 0) list = list.Where(w => w.product_type_id == product_type_id);
+                if (product_published == 0 || product_published == 1) list = list.Where(w => w.product_published == product_published);
                 switch (order_by)
                 {
                     case 2:
@@ -241,6 +243,13 @@ namespace KeyMax.DataQuery
 
                 if (limit == 0) return list.ToList();
                 else return list.Skip((page - 1) *  limit).Take(limit).ToList();
+            }
+        }
+        public int GetCountProducts()
+        {
+            using (var dbContext = new DBContext())
+            {
+                return dbContext.products.Count();
             }
         }
         public products GetProduct(int product_id)
