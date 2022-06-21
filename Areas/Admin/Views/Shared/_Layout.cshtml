@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@if(Session["admin"] == null)
+{
+    <script>window.location.href = "/Admin/Login";</script>
+}
+<!DOCTYPE html>
 <html lang="vi" dir="ltr">
 
 <head>
@@ -187,14 +191,14 @@
                                 </li>
 
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="#">
+                                    <a class="sidebar-link sidebar-title link-nav" href="~/Admin/Invoices">
                                         <i data-feather="archive"></i>
                                         <span>Đơn hàng</span>
                                     </a>
                                 </li>
 
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="#">
+                                    <a class="sidebar-link sidebar-title link-nav" href="~/Admin/Customers">
                                         <i data-feather="users"></i>
                                         <span>Khách hàng</span>
                                     </a>

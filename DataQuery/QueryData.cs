@@ -73,6 +73,11 @@ namespace KeyMax.DataQuery
                 }
             }
         }
+        public bool LoginAdmin(string password)
+        {
+            if (password.Equals("keymax@2022")) return true;
+            return false;
+        }
         public TokenGoogle VerifyTokenGoogle(string token)
         {
             TokenGoogle json = new TokenGoogle();
@@ -371,6 +376,73 @@ namespace KeyMax.DataQuery
             {
                 err = e.Message;
                 return false;
+            }
+        }
+
+        public invoices GetInvoice(int invoice_id)
+        {
+            using (var dbContext = new DBContext())
+            {
+                return dbContext.invoices.SingleOrDefault(s => s.invoice_id == invoice_id);
+            }
+        }
+        public int PostInvoice(invoices invoice, int user_id, List<Cart> carts, out string err)
+        {
+            err = String.Empty;
+            using (var dbContext = new DBContext())
+            using (var dbContextTransaction = dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    invoices inv = new invoices();
+                    inv.user_id = user_id;
+                    inv.invoice_user_fullname = invoice.invoice_user_fullname;
+                    inv.invoice_user_phone_number = invoice.invoice_user_phone_number;
+                    inv.invoice_user_email = invoice.invoice_user_email;
+                    inv.invoice_user_address = invoice.invoice_user_address;
+                    inv.invoice_subtotal = carts.Sum(s => s.cart_product_quantity * s.product.product_price);
+                    inv.invoice_fee_transport = 0;
+                    inv.invoice_created_at = DateTime.Now;
+                    dbContext.invoices.Add(inv);
+                    dbContext.SaveChanges();
+                    foreach(var item in carts)
+                    {
+                        dbContext.invoice_details.Add(new invoice_details {
+                            invoice_id = inv.invoice_id,
+                            product_id = item.product.product_id,
+                            invd_product_quantity = item.cart_product_quantity,
+                            invd_product_price = item.product.product_price
+                        });
+                        dbContext.SaveChanges();
+                    }
+                    dbContextTransaction.Commit();
+                    return inv.invoice_id;
+                }
+                catch (Exception e)
+                {
+                    err = e.Message;
+                    dbContextTransaction.Rollback();
+                    return 0;
+                }
+            }
+        }
+        public List<ProductWithType> GetInvoiceDetails(int invoice_id)
+        {
+            using (var dbContext = new DBContext())
+            {
+                return (from invd in dbContext.invoice_details
+                        join p in dbContext.products
+                        on invd.product_id equals p.product_id into product_with_type
+                        from pwt in product_with_type.DefaultIfEmpty()
+                        where invd.invoice_id == invoice_id
+                        select new ProductWithType
+                        {
+                            product_id = pwt.product_id,
+                            product_name = pwt.product_name,
+                            product_price = pwt.product_price,
+                            product_img = pwt.product_img,
+                            product_quantity = invd.invd_product_quantity
+                        }).ToList();
             }
         }
     }

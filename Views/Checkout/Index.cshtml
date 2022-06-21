@@ -50,24 +50,28 @@
                     <div class="row g-4">
                         <div class="col-md-6">
                             <label for="fname" class="form-label">Họ tên</label>
-                            <input type="text" class="form-control" id="fname" placeholder="Nhập họ tên" value="@u.user_fullname" name="user_fullname" required />
+                            <input type="text" class="form-control" id="fname" placeholder="Nhập họ tên" value="@u.user_fullname" name="invoice_user_fullname" required />
                         </div>
                         <div class="col-md-6">
                             <label for="lname" class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control" id="lname" placeholder="Nhập số điện thoại" value="@u.user_phone_number" name="user_phone_number" required />
+                            <input type="text" class="form-control" id="lname" placeholder="Nhập số điện thoại" value="@u.user_phone_number" name="invoice_user_phone_number" required />
                         </div>
 
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="example@example.com" value="@u.user_email" name="user_email" required />
+                            <input type="email" class="form-control" id="email" placeholder="example@example.com" value="@u.user_email" name="invoice_user_email" required />
                         </div>
                         <div class="col-md-12">
                             <label for="address" class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control" id="address" aria-describedby="emailHelp" value="@u.user_address" name="user_address"
+                            <input type="text" class="form-control" id="address" aria-describedby="emailHelp" value="@u.user_address" name="invoice_user_address"
                                    placeholder="1234 Main St" required />
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="note" class="form-label">Ghi chú</label>
+                            <input type="text" class="form-control" id="note" value="" name="invoice_note" placeholder="Ghi chú đơn hàng" />
                         </div>
                     </div>
                     @*<div class="form-check ps-0 mt-3 custome-form-check">

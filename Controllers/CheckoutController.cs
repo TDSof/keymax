@@ -39,5 +39,29 @@ namespace KeyMax.Controllers
             ViewData["user"] = QD.GetUser((int)Session["user_id"]);
             return View();
         }
+        [HttpPost]
+        public ActionResult Index(invoices inv)
+        {
+            int id = QD.PostInvoice(inv, (int)Session["user_id"], GetCart(), out string err);
+            if (id > 0) return RedirectToAction("Success", "Checkout", new { id });
+
+            ViewData["msg"] = err;
+            List<Cart> listCart = GetCart();
+            int count = listCart.Count;
+            if (count == 0) RedirectToAction("Index", "Shop");
+            ViewData["listCart"] = listCart;
+            ViewData["user"] = QD.GetUser((int)Session["user_id"]);
+            return View();
+        }
+        public ActionResult Success(int? id)
+        {
+            if (id == null) return HttpNotFound();
+            List<ProductWithType> listInvd = QD.GetInvoiceDetails((int)id);
+            if (listInvd == null) return HttpNotFound();
+            Session["listCart"] = null;
+            ViewData["invoice"] = QD.GetInvoice((int)id);
+            ViewData["listInvd"] = listInvd;
+            return View();
+        }
     }
 }
