@@ -236,7 +236,7 @@
     </header>
     <!-- header end -->
 
-    @if (ViewData["msg"] != null)
+    @if (!String.IsNullOrEmpty((string)ViewData["msg"]))
     {
         <script>alert(`@Html.Raw(ViewData["msg"])`);</script>
     }

@@ -219,6 +219,10 @@
             <!-- index body start -->
             <div class="page-body">
                 <div class="container-fluid">
+                    @if (!String.IsNullOrEmpty((string)ViewData["msg"]))
+                    {
+                        <script>alert(`@Html.Raw(ViewData["msg"])`);</script>
+                    }
                     @RenderBody()
                 </div>
                 <!-- Container-fluid Ends-->

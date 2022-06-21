@@ -276,6 +276,7 @@ namespace KeyMax.DataQuery
                             product_img = p.product_img,
                             product_quantity = p.product_quantity,
                             product_description = p.product_description,
+                            product_published = p.product_published,
                             product_type_name = pwt.product_type_name
                         }).FirstOrDefault();
             }
@@ -322,6 +323,54 @@ namespace KeyMax.DataQuery
                             },
                             cart_product_quantity = c.cart_product_quantity
                         }).ToList();
+            }
+        }
+        public int PostProduct(products product, out string err)
+        {
+            err = string.Empty;
+            try
+            {
+                using (var dbContext = new DBContext())
+                {
+                    dbContext.products.Add(product);
+                    dbContext.SaveChanges();
+                    return product.product_id;
+                }
+            }
+            catch (Exception e)
+            {
+                err = e.Message;
+                return 0;
+            }
+        }
+        public bool UpdateProduct(products product, out string err)
+        {
+            err = string.Empty;
+            try
+            {
+                using (var dbContext = new DBContext())
+                {
+                    var productUpdate = dbContext.products.SingleOrDefault(s => s.product_id == product.product_id);
+                    if (productUpdate == null)
+                    {
+                        err = "Sản phẩm không tìm thấy!";
+                        return false;
+                    }
+                    if (productUpdate.product_name != product.product_name) productUpdate.product_name = product.product_name;
+                    if (productUpdate.product_type_id != product.product_type_id) productUpdate.product_type_id = product.product_type_id;
+                    if (productUpdate.product_price != product.product_price) productUpdate.product_price = product.product_price;
+                    if (productUpdate.product_img != product.product_img) productUpdate.product_img = product.product_img;
+                    if (productUpdate.product_quantity != product.product_quantity) productUpdate.product_quantity = product.product_quantity;
+                    if (productUpdate.product_description != product.product_description) productUpdate.product_description = product.product_description;
+                    if (productUpdate.product_published != product.product_published) productUpdate.product_published = product.product_published;
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                err = e.Message;
+                return false;
             }
         }
     }

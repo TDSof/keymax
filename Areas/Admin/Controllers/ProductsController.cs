@@ -26,14 +26,35 @@ namespace KeyMax.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Add(products p)
         {
-            ViewData["listPT"] = QD.GetProductTypes();
-            return View();
+            QD.PostProduct(p, out string msg);
+            if (String.IsNullOrEmpty(msg)) msg = "Thêm thành công!";
+            ViewData["msg"] = msg;
+            //ViewData["listPT"] = QD.GetProductTypes();
+            //return View();
+            return RedirectToAction("Index");
         }
         public ActionResult Edit(int? id)
         {
             if (id == null) return RedirectToAction("Index");
             ProductWithType p = QD.GetProductWithType((int)id);
             if (p == null) return RedirectToAction("Index");
+            ViewData["listPT"] = QD.GetProductTypes();
+            ViewData["product"] = p;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Edit(int? id, products prod)
+        {
+            if (id == null) return RedirectToAction("Index");
+            ProductWithType p = QD.GetProductWithType((int)id);
+            if (p == null) return RedirectToAction("Index");
+            QD.UpdateProduct(prod, out string msg);
+            if(String.IsNullOrEmpty(msg))
+            {
+                p = QD.GetProductWithType((int)id);
+                msg = "Sửa thành công!";
+            }
+            ViewData["msg"] = msg;
             ViewData["listPT"] = QD.GetProductTypes();
             ViewData["product"] = p;
             return View();

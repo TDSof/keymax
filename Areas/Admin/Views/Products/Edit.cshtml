@@ -6,7 +6,8 @@
     var listPT = (List<product_types>)ViewData["listPT"];
     ProductWithType p = (ProductWithType)ViewData["product"];
 
-    string isChecked = "";
+    string isCheckedA = "";
+    string isCheckedB = "checked";
 }
 
 <div class="row">
@@ -79,14 +80,28 @@
                                         <div class="form-check user-checkbox ps-0">
                                             @if (p.product_published == 1)
                                             {
-                                                isChecked = "checked";
+                                                isCheckedA = "checked";
+                                                isCheckedB = "";
                                             }
-                                            <input class="checkbox_animated check-it" type="checkbox" value="1" @isChecked />
+                                            <div class="radio-section">
+                                                <label>
+                                                    <input type="radio" name="product_published" value="1" @isCheckedA />
+                                                    <i></i>
+                                                    <span>Hiện</span>
+                                                </label>
+
+                                                <label>
+                                                    <input type="radio" name="product_published" value="0" @isCheckedB />
+                                                    <i></i>
+                                                    <span>Ẩn</span>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-footer text-end border-0 pt-0">
+                                    <input class="form-control" type="number" value="@p.product_id" name="product_id" hidden />
                                     <button class="btn btn-primary me-3" type="submit">Cập nhật</button>
                                 </div>
                             </div>
