@@ -202,7 +202,9 @@
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Models\invoices.cs" />
+    <Compile Include="Models\InvoiceWithStatus.cs" />
     <Compile Include="Models\invoice_details.cs" />
+    <Compile Include="Models\invoice_status.cs" />
     <Compile Include="Models\products.cs" />
     <Compile Include="Models\ProductWithType.cs" />
     <Compile Include="Models\product_types.cs" />
@@ -529,6 +531,8 @@
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Invoices\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

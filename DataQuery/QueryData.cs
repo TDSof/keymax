@@ -379,11 +379,55 @@ namespace KeyMax.DataQuery
             }
         }
 
-        public invoices GetInvoice(int invoice_id)
+        public List<InvoiceWithStatus> GetInvoices()
         {
             using (var dbContext = new DBContext())
             {
-                return dbContext.invoices.SingleOrDefault(s => s.invoice_id == invoice_id);
+                return (from inv in dbContext.invoices
+                        join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
+                        from iws in invoice_with_status.DefaultIfEmpty()
+                        select new InvoiceWithStatus
+                        {
+                            invoice_id = inv.invoice_id,
+                            user_id = inv.user_id,
+                            invoice_user_fullname = inv.invoice_user_fullname,
+                            invoice_user_phone_number = inv.invoice_user_phone_number,
+                            invoice_user_email = inv.invoice_user_email,
+                            invoice_user_address = inv.invoice_user_address,
+                            invoice_note = inv.invoice_note,
+                            invoice_note_admin = inv.invoice_note_admin,
+                            invoice_subtotal = inv.invoice_subtotal,
+                            invoice_fee_transport = inv.invoice_fee_transport,
+                            invoice_status_id = iws.invoice_status_id,
+                            invoice_status_name = iws.invoice_status_name,
+                            invoice_created_at = inv.invoice_created_at
+                        }).OrderByDescending(o => o.invoice_id).ToList();
+                    }
+        }
+        public InvoiceWithStatus GetInvoice(int invoice_id)
+        {
+            using (var dbContext = new DBContext())
+            {
+                return (from inv in dbContext.invoices
+                        join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
+                        from iws in invoice_with_status.DefaultIfEmpty()
+                        where inv.invoice_id == invoice_id
+                        select new InvoiceWithStatus
+                        {
+                            invoice_id = inv.invoice_id,
+                            user_id = inv.user_id,
+                            invoice_user_fullname = inv.invoice_user_fullname,
+                            invoice_user_phone_number = inv.invoice_user_phone_number,
+                            invoice_user_email = inv.invoice_user_email,
+                            invoice_user_address = inv.invoice_user_address,
+                            invoice_note = inv.invoice_note,
+                            invoice_note_admin = inv.invoice_note_admin,
+                            invoice_subtotal = inv.invoice_subtotal,
+                            invoice_fee_transport = inv.invoice_fee_transport,
+                            invoice_status_id = iws.invoice_status_id,
+                            invoice_status_name = iws.invoice_status_name,
+                            invoice_created_at = inv.invoice_created_at
+                        }).FirstOrDefault();
             }
         }
         public int PostInvoice(invoices invoice, int user_id, List<Cart> carts, out string err)
@@ -403,6 +447,7 @@ namespace KeyMax.DataQuery
                     inv.invoice_subtotal = carts.Sum(s => s.cart_product_quantity * s.product.product_price);
                     inv.invoice_fee_transport = 0;
                     inv.invoice_created_at = DateTime.Now;
+                    inv.invoice_status_id = 2;
                     dbContext.invoices.Add(inv);
                     dbContext.SaveChanges();
                     foreach(var item in carts)
@@ -443,6 +488,14 @@ namespace KeyMax.DataQuery
                             product_img = pwt.product_img,
                             product_quantity = invd.invd_product_quantity
                         }).ToList();
+            }
+        }
+
+        public List<users> GetUsers()
+        {
+            using(var dbContext =new DBContext())
+            {
+                return dbContext.users.OrderByDescending(o => o.user_id).ToList();
             }
         }
     }

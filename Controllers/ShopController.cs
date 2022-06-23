@@ -44,22 +44,23 @@ namespace KeyMax.Controllers
             if (id == null) return HttpNotFound();
             ProductWithType p = QD.GetProductWithType((int)id);
             if (p == null) return HttpNotFound();
+            if (p.product_published == 0) return HttpNotFound();
             ViewData["product"] = p;
             ViewData["productRelated"] = QD.GetProductsWithType("", 1, (int)p.product_type_id, 1, 8);
             return View();
         }
-        [HttpPost]
-        public ActionResult Detail(Object obj)
-        {
-            int.TryParse(HttpContext.Request.Form["password"], out int id);
-            if (id == 0) return HttpNotFound();
-            ProductWithType p = QD.GetProductWithType(id);
-            if (p == null) return HttpNotFound();
-            ViewData["product"] = p;
-            ViewData["productRelated"] = QD.GetProductsWithType("", 1, (int)p.product_type_id, 1, 8);
+        //[HttpPost]
+        //public ActionResult Detail(Object obj)
+        //{
+        //    int.TryParse(HttpContext.Request.Form["password"], out int id);
+        //    if (id == 0) return HttpNotFound();
+        //    ProductWithType p = QD.GetProductWithType(id);
+        //    if (p == null) return HttpNotFound();
+        //    ViewData["product"] = p;
+        //    ViewData["productRelated"] = QD.GetProductsWithType("", 1, (int)p.product_type_id, 1, 8);
 
-            ViewData["msg"] = "Đã thêm vào giỏ hàng!";
-            return View();
-        }
+        //    ViewData["msg"] = "Đã thêm vào giỏ hàng!";
+        //    return View();
+        //}
     }
 }

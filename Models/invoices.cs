@@ -31,25 +31,29 @@ namespace KeyMax.Models
         [StringLength(50)]
         public string invoice_user_email { get; set; }
 
-        [Column(TypeName = "text")]
+        [Column(TypeName = "ntext")]
         [Required]
         public string invoice_user_address { get; set; }
 
-        [Column(TypeName = "text")]
+        [Column(TypeName = "ntext")]
         public string invoice_note { get; set; }
 
-        [Column(TypeName = "text")]
+        [Column(TypeName = "ntext")]
         public string invoice_note_admin { get; set; }
 
         public int invoice_subtotal { get; set; }
 
         public int invoice_fee_transport { get; set; }
 
+        public int? invoice_status_id { get; set; }
+
         public DateTime invoice_created_at { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<invoice_details> invoice_details { get; set; }
 
-        public virtual users users { get; set; }
+        public virtual invoice_status invoice_status { get; set; }
+
+        public virtual users user { get; set; }
     }
 }

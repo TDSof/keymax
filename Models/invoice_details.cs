@@ -22,8 +22,8 @@ namespace KeyMax.Models
 
         public int invd_product_price { get; set; }
 
-        public virtual invoices invoices { get; set; }
+        public virtual invoices invoice { get; set; }
 
-        public virtual products products { get; set; }
+        public virtual products product { get; set; }
     }
 }

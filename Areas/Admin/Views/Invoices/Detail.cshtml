@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Func f = new Func();
+    var inv = (InvoiceWithStatus)ViewData["invoice"];
+    var listProducts = (List<ProductWithType>)ViewData["listProducts"];
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="bg-inner cart-section order-details-table">
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="table-responsive table-details">
+                                <table class="table cart-table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Ảnh</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Giá</th>
+                                            <th>Thành tiền</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var item in listProducts)
+                                        {
+                                            <tr class="table-order">
+                                                <td>
+                                                    <a href="javascript:void(0)">
+                                                        <img src="@item.product_img" class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @*<p>Product Name</p>*@
+                                                    <h5>@item.product_name</h5>
+                                                </td>
+                                                <td>
+                                                    @*<p>Quantity</p>*@
+                                                    <h5>@item.product_quantity</h5>
+                                                </td>
+                                                <td>
+                                                    @*<p>Price</p>*@
+                                                    <h5>@f.NumberToStr(item.product_price) đ</h5>
+                                                </td>
+                                                <td><h5>@f.NumberToStr((int)item.product_quantity * item.product_price) đ</h5></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                    <tfoot>
+                                        @*<tr class="table-order">
+                                            <td colspan="3">
+                                                <h5>Tổng cộng </h5>
+                                            </td>
+                                            <td>
+                                                <h4>$55.00</h4>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-order">
+                                            <td colspan="3">
+                                                <h5>Shipping :</h5>
+                                            </td>
+                                            <td>
+                                                <h4>$12.00</h4>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-order">
+                                            <td colspan="3">
+                                                <h5>Tax(GST) :</h5>
+                                            </td>
+                                            <td>
+                                                <h4>$10.00</h4>
+                                            </td>
+                                        </tr>*@
+                                        <tr class="table-order">
+                                            <td colspan="4">
+                                                <h4 class="theme-color fw-bold">Tổng cộng:</h4>
+                                            </td>
+                                            <td>
+                                                <h4 class="theme-color fw-bold">@f.NumberToStr(inv.invoice_subtotal)đ</h4>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="order-success">
+                                <div class="row g-4">
+                                    <h4>Thông tin</h4>
+                                    <ul class="order-details">
+                                        <li>mã đơn: @inv.invoice_id</li>
+                                        <li>Ngày đặt: @inv.invoice_created_at.ToString()</li>
+                                        @*<li>Order Total: $907.28</li>*@
+                                    </ul>
+
+                                    <h4>Người nhận</h4>
+                                    <ul class="order-details">
+                                        <li>@inv.invoice_user_fullname</li>
+                                        <li>@inv.invoice_user_phone_number</li>
+                                        <li>@inv.invoice_user_email</li>
+                                        <li>@inv.invoice_user_address</li>
+                                    </ul>
+
+                                    <div class="payment-mode">
+                                        <h4>Phương thức thanh toán</h4>
+                                        <p>
+                                            Pay on Delivery (Cash/Card). Cash on delivery (COD)
+                                            available. Card/Net banking acceptance subject to device
+                                            availability.
+                                        </p>
+                                    </div>
+
+                                    @*<div class="delivery-sec">
+                                        <h3>
+                                            expected date of delivery: <span>october 22, 2018</span>
+                                        </h3>
+                                        <a href="order-tracking.html">track order</a>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- section end -->
+            </div>
+        </div>
+    </div>
+</div>
