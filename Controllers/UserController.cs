@@ -68,7 +68,7 @@ namespace KeyMax.Controllers
             }
             string token = Request.QueryString["access_token"];
             string from = Request.QueryString["from"];
-            if (token != null && from != null)
+            if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(from))
             {
                 if (QD.LoginWith(token, from, out users user) > 0)
                 {
