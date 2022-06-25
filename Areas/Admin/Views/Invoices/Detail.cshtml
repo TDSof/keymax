@@ -11,7 +11,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <div class="bg-inner cart-section order-details-table">
+                <div class="bg-inner cart-section order-details-table invoice-print-area">
                     <div class="row g-4">
                         <div class="col-xl-8">
                             <div class="table-responsive table-details">
@@ -117,12 +117,12 @@
                                         </p>
                                     </div>
 
-                                    @*<div class="delivery-sec">
-                                        <h3>
+                                    <div class="delivery-sec">
+                                        @*<h3>
                                             expected date of delivery: <span>october 22, 2018</span>
-                                        </h3>
-                                        <a href="order-tracking.html">track order</a>
-                                    </div>*@
+                                        </h3>*@
+                                        <a href="javascript:" onclick="w=window.open('@Url.Action("Print", new { invoice_id = inv.invoice_id })'); w.print();">In hoá đơn</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

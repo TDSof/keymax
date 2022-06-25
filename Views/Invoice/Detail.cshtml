@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Func f = new Func();
+    var inv = (InvoiceWithStatus)ViewData["invoice"];
+    var listInvd = (List<ProductWithType>)ViewData["listInvd"];
+    string status1 = "todo", status2 = "todo", status3 = "todo", status4 = "todo";
+    string ss = "Đã xác nhận thông tin thanh toán";
+    if (inv.invoice_prepaid == 1)
+    {
+        ss = "Đơn hàng đã thanh toán";
+    }
+    switch (inv.invoice_status_id)
+    {
+        case 1:
+            status1 = status2 = status3 = status4 = "done";
+            break;
+        case 2:
+            status1 = status2 = status3 = "done";
+            break;
+        case 3:
+            status1 = status2 = "done";
+            ss = "Đã huỷ";
+            break;
+        case 4:
+            status1 = "done";
+            break;
+    }
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Chi tiết đơn hàng</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="~/Home">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Chi tiết đơn hàng</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+<!-- Order Track Section Start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 overflow-hidden">
+                <div class="order-left-image ratio_asos">
+                    <div class="order-image-contain">
+                        @*<h4>Van Heusen Men's Solid Regular Fit Polo</h4>*@
+                        <div class="tracker-number">
+                            <p class="font-light">Mã đơn: <span>@inv.invoice_id</span></p>
+                            <p class="font-light mb-0">Ngày đặt: <span>@inv.invoice_created_at.ToString()</span></p>
+                        </div>
+                        <ol class="progtrckr">
+                            <li class="progtrckr-done">
+                                <h5>Đơn đã đặt</h5>
+                                @*<h6>05:43 AM</h6>*@
+                            </li>
+                            <li class="progtrckr-@status1">
+                                <h5>Đang xử lý</h5>
+                                @*<h6>01:21 PM</h6>*@
+                            </li>
+                            <li class="progtrckr-@status2">
+                                <h5>@ss</h5>
+                                @*<h6>Processing</h6>*@
+                            </li>
+                            <li class="progtrckr-@status3">
+                                <h5>Đã giao cho ĐVVC</h5>
+                                @*<h6>Pending</h6>*@
+                            </li>
+                            <li class="progtrckr-@status4">
+                                <h5>Đánh giá - Góp ý</h5>
+                                @*<h6>Pending</h6>*@
+                            </li>
+                        </ol>
+                        @*<h5 class="font-light">
+                            Your items is on the way. Tracking information will be available
+                            within 24 hours.
+                        </h5>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Order Track Section End -->
+<!-- Invoice Section Start -->
+<section class="cart-section section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mb-3">Thông tin người nhận</h3>
+                <form class="needs-validation" method="post" action="">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <label for="fname" class="form-label">Họ tên</label>
+                            <input type="text" class="form-control" id="fname" placeholder="Nhập họ tên" value="@inv.invoice_user_fullname" name="invoice_user_fullname" disabled />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lname" class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control" id="lname" placeholder="Nhập số điện thoại" value="@inv.invoice_user_phone_number" name="invoice_user_phone_number" disabled />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="example@example.com" value="@inv.invoice_user_email" name="invoice_user_email" disabled />
+                        </div>
+                        <div class="col-md-12">
+                            <label for="address" class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" aria-describedby="emailHelp" value="@inv.invoice_user_address" name="invoice_user_address"
+                                   placeholder="1234 Main St" disabled />
+                        </div>
+                        <div class="col-md-12">
+                            <label for="note" class="form-label">Ghi chú</label>
+                            <input type="text" class="form-control" id="note" value="@inv.invoice_note" name="invoice_note" placeholder="Ghi chú đơn hàng" disabled />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 table-responsive mt-4">
+                <h3 class="mb-3">Danh sách sản phẩm</h3>
+                <table class="table cart-table">
+                    <thead>
+                        <tr class="table-head">
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng cộng</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in listInvd)
+                    {
+                        int subtotal = (int)item.product_quantity * item.product_price;
+                        <tbody id="product_@item.product_id">
+                            <tr>
+                                <td>
+                                    <a href="javascript:void();">
+                                        <img src="@item.product_img" class=" blur-up lazyload" />
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="~/Shop/Detail/@item.product_id">@item.product_name</a>
+                                </td>
+                                <td>
+                                    <h2 class="product_price" id="product_price_@item.product_id" data-price="@item.product_price">@f.NumberToStr(item.product_price)</h2>
+                                </td>
+                                <td>
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <input type="number" name="quantity" class="form-control input-number" id="product_quantity_@item.product_id" value="@item.product_quantity" disabled />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h2 class="td-color" id="product_subtotal_@item.product_id">@f.NumberToStr(subtotal)đ</h2>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+
+            <div class="cart-checkout-section">
+                <div class="row g-4">
+                    <div class="col-lg-4 col-sm-6">
+                    </div>
+
+                    <div class="col-lg-4 col-sm-6 ">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="cart-box">
+                            <div class="cart-box-details">
+                                <div class="total-details">
+                                    <div class="top-details">
+                                        <h3>Tổng đơn hàng</h3>
+                                        <h6>Thành tiền <span id="cart_subtotal">@f.NumberToStr(inv.invoice_subtotal)đ</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Invoice Section End -->

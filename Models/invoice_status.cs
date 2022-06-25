@@ -18,7 +18,7 @@ namespace KeyMax.Models
         public int invoice_status_id { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(20)]
         public string invoice_status_name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

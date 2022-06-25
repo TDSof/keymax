@@ -379,30 +379,33 @@ namespace KeyMax.DataQuery
             }
         }
 
-        public List<InvoiceWithStatus> GetInvoices()
+        public List<InvoiceWithStatus> GetInvoices(int user_id = 0)
         {
             using (var dbContext = new DBContext())
             {
-                return (from inv in dbContext.invoices
-                        join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
-                        from iws in invoice_with_status.DefaultIfEmpty()
-                        select new InvoiceWithStatus
-                        {
-                            invoice_id = inv.invoice_id,
-                            user_id = inv.user_id,
-                            invoice_user_fullname = inv.invoice_user_fullname,
-                            invoice_user_phone_number = inv.invoice_user_phone_number,
-                            invoice_user_email = inv.invoice_user_email,
-                            invoice_user_address = inv.invoice_user_address,
-                            invoice_note = inv.invoice_note,
-                            invoice_note_admin = inv.invoice_note_admin,
-                            invoice_subtotal = inv.invoice_subtotal,
-                            invoice_fee_transport = inv.invoice_fee_transport,
-                            invoice_status_id = iws.invoice_status_id,
-                            invoice_status_name = iws.invoice_status_name,
-                            invoice_created_at = inv.invoice_created_at
-                        }).OrderByDescending(o => o.invoice_id).ToList();
-                    }
+                IEnumerable<InvoiceWithStatus> list = (from inv in dbContext.invoices
+                    join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
+                    from iws in invoice_with_status.DefaultIfEmpty()
+                    select new InvoiceWithStatus
+                    {
+                        invoice_id = inv.invoice_id,
+                        user_id = inv.user_id,
+                        invoice_user_fullname = inv.invoice_user_fullname,
+                        invoice_user_phone_number = inv.invoice_user_phone_number,
+                        invoice_user_email = inv.invoice_user_email,
+                        invoice_user_address = inv.invoice_user_address,
+                        invoice_note = inv.invoice_note,
+                        invoice_note_admin = inv.invoice_note_admin,
+                        invoice_subtotal = inv.invoice_subtotal,
+                        invoice_fee_transport = inv.invoice_fee_transport,
+                        invoice_status_id = iws.invoice_status_id,
+                        invoice_status_name = iws.invoice_status_name,
+                        invoice_prepaid = (short)inv.invoice_prepaid,
+                        invoice_created_at = inv.invoice_created_at
+                    }).OrderByDescending(o => o.invoice_id);
+                if (user_id > 0) return list.Where(w => w.user_id == user_id).ToList();
+                else return list.ToList();
+            }
         }
         public InvoiceWithStatus GetInvoice(int invoice_id)
         {
@@ -426,6 +429,7 @@ namespace KeyMax.DataQuery
                             invoice_fee_transport = inv.invoice_fee_transport,
                             invoice_status_id = iws.invoice_status_id,
                             invoice_status_name = iws.invoice_status_name,
+                            invoice_prepaid = (short)inv.invoice_prepaid,
                             invoice_created_at = inv.invoice_created_at
                         }).FirstOrDefault();
             }
@@ -447,7 +451,8 @@ namespace KeyMax.DataQuery
                     inv.invoice_subtotal = carts.Sum(s => s.cart_product_quantity * s.product.product_price);
                     inv.invoice_fee_transport = 0;
                     inv.invoice_created_at = DateTime.Now;
-                    inv.invoice_status_id = 2;
+                    inv.invoice_status_id = 4;
+                    inv.invoice_prepaid = 0;
                     dbContext.invoices.Add(inv);
                     dbContext.SaveChanges();
                     foreach(var item in carts)

@@ -190,6 +190,7 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\Api\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -533,6 +534,7 @@
     <Content Include="Areas\Admin\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Invoices\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Print.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -569,6 +571,7 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Checkout\Success.cshtml" />
+    <Content Include="Views\Invoice\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,7 +1,9 @@
 ﻿
 @{
     ViewBag.Title = "Trang cá nhân";
+    Func f = new Func();
     var user = (users)ViewData["user"];
+    var listInvoices = (List<InvoiceWithStatus>)ViewData["listInvoices"];
 }
 
 <!-- Breadcrumb section start -->
@@ -180,7 +182,6 @@
                             <table class="table cart-table">
                                 <thead>
                                     <tr class="table-head">
-                                        <th scope="col">image</th>
                                         <th scope="col">Mã đơn</th>
                                         <th scope="col">Trạng thái</th>
                                         <th scope="col">Tổng tiền</th>
@@ -188,138 +189,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/front/1.jpg"
-                                                     class="blur-up lazyload" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="mt-0">#125021</p>
-                                        </td>
-                                        <td>
-                                            <p class="success-button btn btn-sm">Shipped</p>
-                                        </td>
-                                        <td>
-                                            <p class="theme-color fs-6">$49.54</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)">
-                                                <i class="far fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/front/2.jpg"
-                                                     class="blur-up lazyload" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="mt-0">#125367</p>
-                                        </td>
-                                        <td>
-                                            <p class="danger-button btn btn-sm">Pending</p>
-                                        </td>
-                                        <td>
-                                            <p class="theme-color fs-6">$49.54</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)">
-                                                <i class="far fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/front/3.jpg"
-                                                     class="blur-up lazyload" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="m-0">#125948</p>
-                                        </td>
-                                        <td>
-                                            <p class="success-button btn btn-sm">Shipped</p>
-                                        </td>
-                                        <td>
-                                            <p class="theme-color fs-6">$49.54</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)">
-                                                <i class="far fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/front/4.jpg"
-                                                     class="blur-up lazyload" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="m-0">#127569</p>
-                                        </td>
-                                        <td>
-                                            <p class="success-button btn btn-sm">Shipped</p>
-                                        </td>
-                                        <td>
-                                            <p class="theme-color fs-6">$49.54</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)">
-                                                <i class="far fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/front/5.jpg"
-                                                     class="blur-up lazyload" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="m-0">#125753</p>
-                                        </td>
-                                        <td>
-                                            <p class="danger-button btn btn-sm">Canceled</p>
-                                        </td>
-                                        <td>
-                                            <p class="theme-color fs-6">$49.54</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)">
-                                                <i class="far fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="product-left-sidebar.html">
-                                                <img src="~/Content/images/fashion/product/front/6.jpg"
-                                                     class="blur-up lazyload" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="m-0">#125021</p>
-                                        </td>
-                                        <td>
-                                            <p class="danger-button btn btn-sm">Canceled</p>
-                                        </td>
-                                        <td>
-                                            <p class="theme-color fs-6">$49.54</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)">
-                                                <i class="far fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in listInvoices)
+                                    {
+                                        string status = "";
+                                        if (item.invoice_status_id == 1)
+                                        {
+                                            status = "success";
+                                        }
+                                        else if (item.invoice_status_id == 2)
+                                        {
+                                            status = "warning";
+                                        }
+                                        else
+                                        {
+                                            status = "danger";
+                                        }
+                                        <tr>
+                                            <td>
+                                                <p class="mt-0">#@item.invoice_id</p>
+                                            </td>
+                                            <td>
+                                                <p class="@status-button btn btn-sm">@item.invoice_status_name</p>
+                                            </td>
+                                            <td>
+                                                <p class="theme-color fs-6">@f.NumberToStr(item.invoice_subtotal)</p>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Detail", "Invoice", new { invoice_id = item.invoice_id })">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
