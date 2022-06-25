@@ -23,6 +23,7 @@ namespace KeyMax.Controllers
                 return RedirectToAction("Login");
             }
             ViewData["user"] = QD.GetUser((int)Session["user_id"]);
+            ViewData["listInvoices"] = QD.GetInvoices((int)Session["user_id"]);
             if (msg != null) ViewData["msg"] = msg;
             return View();
         }

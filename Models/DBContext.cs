@@ -13,6 +13,7 @@ namespace KeyMax.Models
         }
 
         public virtual DbSet<invoice_details> invoice_details { get; set; }
+        public virtual DbSet<invoice_status> invoice_status { get; set; }
         public virtual DbSet<invoices> invoices { get; set; }
         public virtual DbSet<product_types> product_types { get; set; }
         public virtual DbSet<products> products { get; set; }
@@ -22,25 +23,13 @@ namespace KeyMax.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<invoices>()
-                .Property(e => e.invoice_user_address)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<invoices>()
-                .Property(e => e.invoice_note)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<invoices>()
-                .Property(e => e.invoice_note_admin)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<invoices>()
                 .HasMany(e => e.invoice_details)
-                .WithRequired(e => e.invoices)
+                .WithRequired(e => e.invoice)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<products>()
                 .HasMany(e => e.invoice_details)
-                .WithRequired(e => e.products)
+                .WithRequired(e => e.product)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<users>()
@@ -49,7 +38,7 @@ namespace KeyMax.Models
 
             modelBuilder.Entity<users>()
                 .HasMany(e => e.invoices)
-                .WithRequired(e => e.users)
+                .WithRequired(e => e.user)
                 .WillCascadeOnDelete(false);
         }
     }
