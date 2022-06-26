@@ -90,7 +90,7 @@
         }
     </script>
 
-    @if (!String.IsNullOrEmpty((string)ViewData["msg"]))
+    @if (!string.IsNullOrEmpty((string)ViewData["msg"]))
     {
         <script>alert(`@Html.Raw(ViewData["msg"])`);</script>
     }

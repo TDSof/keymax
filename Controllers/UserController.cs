@@ -24,6 +24,7 @@ namespace KeyMax.Controllers
             }
             ViewData["user"] = QD.GetUser((int)Session["user_id"]);
             ViewData["listInvoices"] = QD.GetInvoices((int)Session["user_id"]);
+            ViewData["UserOrder"] = QD.GetUserOrder((int)Session["user_id"]);
             if (msg != null) ViewData["msg"] = msg;
             return View();
         }
@@ -139,6 +140,13 @@ namespace KeyMax.Controllers
             else msg = "Mật khẩu không trùng nhau. Vui lòng thử lại!";
             ViewData["msg"] = msg;
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session.Remove("user_id");
+            Session.Remove("user_fullname");
+            Session.Remove("user_email");
+            return RedirectToAction("", "Home");
         }
     }
 }

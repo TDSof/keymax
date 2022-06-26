@@ -6,13 +6,13 @@ using System.Web.Mvc;
 
 namespace KeyMax.Areas.Admin.Controllers
 {
-    public class DashboardController : Controller
+    public class LogoutController : Controller
     {
-        // GET: Admin/Home
+        // GET: Admin/Logout
         public ActionResult Index()
         {
-            //ViewData[""]
-            return View();
+            Session.Remove("admin");
+            return RedirectToAction("Index", "Login");
         }
     }
 }

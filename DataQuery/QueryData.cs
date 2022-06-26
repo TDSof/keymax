@@ -1,8 +1,10 @@
 ﻿using KeyMax.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
@@ -18,10 +20,25 @@ namespace KeyMax.DataQuery
         //[JsonProperty(PropertyName = "email")]
         public string email { get; set; }
     }
+    public class UserOrder
+    {
+        public int total { get; set; }
+        public int pending { get; set; }
+        public int cancel { get; set; }
+    }
+    public class Statistic
+    {
+        public int total_invoices { get; set; }
+        public int total_invoices_pending { get; set; }
+        public int total_invoices_cancel { get; set; }
+        public int total_users { get; set; }
+        public int total_revenue { get; set; }
+    }
 
     public class QueryData
     {
         Func f = new Func();
+        private static HttpClient httpClient = new HttpClient();
 
         public bool TestConnect()
         {
@@ -29,6 +46,23 @@ namespace KeyMax.DataQuery
             {
                 return dbContext.Database.Exists();
             }
+        }
+
+        public bool VerifyRecaptcha(string response)
+        {
+            string secret = Func.RECAPTCHA_SECRET_KEY;
+            var res = httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={response}").Result;
+            if (res.StatusCode != HttpStatusCode.OK)
+            {
+                return false;
+            }
+            string JSONres = res.Content.ReadAsStringAsync().Result;
+            dynamic JSONdata = JObject.Parse(JSONres);
+            if (JSONdata.success != "true") // || JSONdata.score <= 0.5m
+            {
+                return false;
+            }
+            return true;
         }
 
         // Hàm Login trả về: -1: Tài khoản không có / 0: Sai mật khẩu / >=1: Đăng nhập thành công!
@@ -81,13 +115,29 @@ namespace KeyMax.DataQuery
         public TokenGoogle VerifyTokenGoogle(string token)
         {
             TokenGoogle json = new TokenGoogle();
-            using (var client = new HttpClient())
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri("https://www.googleapis.com/oauth2/v3/tokeninfo");
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //    //GET Method
+            //    HttpResponseMessage response = client.GetAsync("?id_token=" + token).Result;
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var t = JsonConvert.DeserializeObject<TokenGoogle>(response.Content.ReadAsStringAsync().Result);
+            //        if (t.error_description == null)
+            //        {
+            //            json.name = t.name;
+            //            json.email = t.email;
+            //        }
+            //        else json.error_description = t.error_description;
+            //    }
+            //}
+
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}"))
             {
-                client.BaseAddress = new Uri("https://www.googleapis.com/oauth2/v3/tokeninfo");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //GET Method
-                HttpResponseMessage response = client.GetAsync("?id_token=" + token).Result;
+                requestMessage.Headers.Add("Accept", "application/json");
+                HttpResponseMessage response = httpClient.SendAsync(requestMessage).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var t = JsonConvert.DeserializeObject<TokenGoogle>(response.Content.ReadAsStringAsync().Result);
@@ -175,6 +225,13 @@ namespace KeyMax.DataQuery
             {
                 users x = dbContext.users.SingleOrDefault(s => s.user_id == user_id);
                 return x;
+            }
+        }
+        public List<users> GetUsers()
+        {
+            using (var dbContext = new DBContext())
+            {
+                return dbContext.users.OrderByDescending(o => o.user_id).ToList();
             }
         }
         public bool UpdateUser(users user)
@@ -401,6 +458,7 @@ namespace KeyMax.DataQuery
                         invoice_status_id = iws.invoice_status_id,
                         invoice_status_name = iws.invoice_status_name,
                         invoice_prepaid = (short)inv.invoice_prepaid,
+                        invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id,
                         invoice_created_at = inv.invoice_created_at
                     }).OrderByDescending(o => o.invoice_id);
                 if (user_id > 0) return list.Where(w => w.user_id == user_id).ToList();
@@ -430,29 +488,30 @@ namespace KeyMax.DataQuery
                             invoice_status_id = iws.invoice_status_id,
                             invoice_status_name = iws.invoice_status_name,
                             invoice_prepaid = (short)inv.invoice_prepaid,
+                            invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id,
                             invoice_created_at = inv.invoice_created_at
                         }).FirstOrDefault();
             }
         }
-        public int PostInvoice(invoices invoice, int user_id, List<Cart> carts, out string err)
+        public int PostInvoice(invoices inv, int user_id, List<Cart> carts, out string err)
         {
-            err = String.Empty;
+            err = string.Empty;
             using (var dbContext = new DBContext())
             using (var dbContextTransaction = dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    invoices inv = new invoices();
+                    //invoices inv = new invoices();
                     inv.user_id = user_id;
-                    inv.invoice_user_fullname = invoice.invoice_user_fullname;
-                    inv.invoice_user_phone_number = invoice.invoice_user_phone_number;
-                    inv.invoice_user_email = invoice.invoice_user_email;
-                    inv.invoice_user_address = invoice.invoice_user_address;
+                    //inv.invoice_user_fullname = invoice.invoice_user_fullname;
+                    //inv.invoice_user_phone_number = invoice.invoice_user_phone_number;
+                    //inv.invoice_user_email = invoice.invoice_user_email;
+                    //inv.invoice_user_address = invoice.invoice_user_address;
                     inv.invoice_subtotal = carts.Sum(s => s.cart_product_quantity * s.product.product_price);
                     inv.invoice_fee_transport = 0;
                     inv.invoice_created_at = DateTime.Now;
                     inv.invoice_status_id = 4;
-                    inv.invoice_prepaid = 0;
+                    //inv.invoice_prepaid = 0;
                     dbContext.invoices.Add(inv);
                     dbContext.SaveChanges();
                     foreach(var item in carts)
@@ -476,6 +535,28 @@ namespace KeyMax.DataQuery
                 }
             }
         }
+        public bool UpdateInvoice(InvoiceWithStatus inv)
+        {
+            try
+            {
+                using (var dbContext = new DBContext())
+                {
+                    var invUpdate = dbContext.invoices.SingleOrDefault(s => s.invoice_id == inv.invoice_id);
+                    if (invUpdate == null)
+                    {
+                        return false;
+                    }
+                    if (invUpdate.invoice_status_id != inv.invoice_status_id) invUpdate.invoice_status_id = inv.invoice_status_id;
+                    if (string.IsNullOrEmpty(invUpdate.invoice_vnp_transaction_id)) invUpdate.invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id;
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public List<ProductWithType> GetInvoiceDetails(int invoice_id)
         {
             using (var dbContext = new DBContext())
@@ -495,12 +576,73 @@ namespace KeyMax.DataQuery
                         }).ToList();
             }
         }
-
-        public List<users> GetUsers()
+        public List<invoice_status> GetInvoiceStatus()
         {
-            using(var dbContext =new DBContext())
+            using (var dbContext = new DBContext())
             {
-                return dbContext.users.OrderByDescending(o => o.user_id).ToList();
+                return dbContext.invoice_status.ToList();
+            }
+        }
+        public UserOrder GetUserOrder(int user_id)
+        {
+            using (var dbContext = new DBContext())
+            {
+                IEnumerable<invoices> list = dbContext.invoices.Where(w => w.user_id == user_id);
+                UserOrder uo = new UserOrder();
+                uo.total = list.Count();
+                uo.pending = list.Where(w => w.invoice_status_id == 2 || w.invoice_status_id == 4).Count();
+                uo.cancel = list.Where(w => w.invoice_status_id == 3).Count();
+                return uo;
+            }
+        }
+
+        public List<reports> GetReports()
+        {
+            using(var dbContext = new DBContext())
+            {
+                return dbContext.reports.OrderByDescending(o => o.report_created_at).ToList();
+            }
+        }
+        public bool PostReport(reports report, out string err)
+        {
+            err = string.Empty;
+            try
+            {
+                using (var dbContext = new DBContext())
+                {
+                    report.report_created_at = DateTime.Now;
+                    dbContext.reports.Add(report);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                err = e.Message;
+                return false;
+            }
+        }
+        public reports GetReport(int report_id)
+        {
+            using (var dbContext = new DBContext())
+            {
+                return dbContext.reports.SingleOrDefault(s => s.report_id == report_id);
+            }
+        }
+
+        public Statistic GetStatistic()
+        {
+            using (var dbContext = new DBContext())
+            {
+                IEnumerable<invoices> listInvoices = dbContext.invoices;
+                return new Statistic
+                {
+                    total_invoices = listInvoices.Count(),
+                    total_invoices_pending = listInvoices.Where(w => w.invoice_status_id == 4).Count(),
+                    total_invoices_cancel = listInvoices.Where(w => w.invoice_status_id == 3).Count(),
+                    total_users = dbContext.users.Count(),
+                    total_revenue = dbContext.invoices.Sum(s => s.invoice_subtotal)
+                };
             }
         }
     }

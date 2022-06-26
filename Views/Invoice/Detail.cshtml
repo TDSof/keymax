@@ -87,7 +87,7 @@
                                 @*<h6>Processing</h6>*@
                             </li>
                             <li class="progtrckr-@status3">
-                                <h5>Đã giao cho ĐVVC</h5>
+                                <h5>Đang giao cho ĐVVC</h5>
                                 @*<h6>Pending</h6>*@
                             </li>
                             <li class="progtrckr-@status4">
@@ -201,6 +201,22 @@
                                     <div class="top-details">
                                         <h3>Tổng đơn hàng</h3>
                                         <h6>Thành tiền <span id="cart_subtotal">@f.NumberToStr(inv.invoice_subtotal)đ</span></h6>
+                                        @{
+                                            string payment = "";
+                                            if (inv.invoice_prepaid == 0)
+                                            {
+                                                payment = "COD";
+                                            }
+                                            else
+                                            {
+                                                payment = "VN PAY";
+                                            }
+                                        }
+                                        <h6>Phương thức thanh toán <span id="cart_subtotal">@payment</span></h6>
+                                        @if (inv.invoice_status_id != 3 && inv.invoice_status_id != 1)
+                                        {
+                                            <a href="@Url.Action("Cancel", "Invoice", new { id = inv.invoice_id })">Huỷ đơn</a>
+                                        }
                                     </div>
                                 </div>
                             </div>

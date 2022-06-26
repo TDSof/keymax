@@ -1,9 +1,16 @@
 ﻿
 @{
+    ViewBag.Title = "Chi tiết đơn hàng";
     var listInvd = (List<ProductWithType>)ViewData["listInvd"];
     var inv = (InvoiceWithStatus)ViewData["invoice"];
     Func f = new Func();
     int total = 0;
+    var vnp_transaction_id = (string)ViewData["vnp_transaction_id"];
+    string style = "";
+    if(inv.invoice_prepaid > 0 && string.IsNullOrEmpty(vnp_transaction_id))
+    {
+        style = "background: -webkit-gradient(linear, left top, right bottom, from(#e22454), to(#e22454)); background: linear-gradient(to bottom right, #e22454, #e22454);";
+    }
 }
 
 <!-- Order Success Section Start -->
@@ -14,10 +21,9 @@
                 <div class="success-icon">
                     <div class="main-container">
                         <div class="check-container">
-                            <div class="check-background">
+                            <div class="check-background" style="@style">
                                 <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13"
-                                          stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
                             <div class="check-shadow"></div>
@@ -26,8 +32,8 @@
 
                     <div class="success-contain">
                         <h4>Đặt hàng thành công</h4>
-                        <h5 class="font-light">Thanh toán được xử lý thành công và đơn đặt hàng của bạn đang được tiến hành</h5>
-                        <h6 class="font-light">Transaction ID: @inv.invoice_id</h6>
+                        <h5 class="font-light">@ViewData["content"]</h5>
+                        <h6 class="font-light">Mã đơn: @inv.invoice_id</h6>
                     </div>
                 </div>
             </div>
@@ -65,7 +71,7 @@
                                     </td>
                                     <td>
                                         <p>Giá</p>
-                                        <h5>@item.product_price</h5>
+                                        <h5>@f.NumberToStr(item.product_price)</h5>
                                     </td>
                                 </tr>
                             }
@@ -84,7 +90,7 @@
                                     <h4 class="theme-color fw-bold">Tổng cộng:</h4>
                                 </td>
                                 <td>
-                                    <h4 class="theme-color fw-bold">@total</h4>
+                                    <h4 class="theme-color fw-bold">@f.NumberToStr(total)đ</h4>
                                 </td>
                             </tr>
                         </tfoot>
@@ -99,7 +105,7 @@
                             <ul class="order-details">
                                 <li>Mã đơn hàng: @inv.invoice_id</li>
                                 <li>Ngày đặt: @inv.invoice_created_at.ToString()</li>
-                                <li>Tổng đơn: @inv.invoice_subtotal</li>
+                                <li>Tổng đơn: @f.NumberToStr(inv.invoice_subtotal)đ</li>
                             </ul>
                         </div>
 
@@ -115,16 +121,27 @@
                         <div class="col-12">
                             <div class="payment-mode">
                                 <h4>Phương thức thanh toán</h4>
-                                <p>Cash on delivery (COD)</p>
+                                @if (inv.invoice_prepaid == 0)
+                                {
+                                    <p>Thanh toán khi nhận hàng (COD)</p>
+                                }
+                                else
+                                {
+                                    <p>Thanh toán trực tuyến (VN PAY)</p>
+                                    <p>Mã giao dịch: @vnp_transaction_id</p>
+                                }
                             </div>
                         </div>
 
-                        @*<div class="col-md-12">
-                            <div class="delivery-sec">
-                                <h3>expected date of delivery: <span>october 22, 2018</span></h3>
-                                <a href="order-tracking.html">track order</a>
+                        @if (inv.invoice_prepaid > 0 && string.IsNullOrEmpty(vnp_transaction_id))
+                        {
+                            <div class="col-md-12">
+                                <div class="delivery-sec">
+                                    @*<h3>expected date of delivery: <span>october 22, 2018</span></h3>*@
+                                    <a href="@Url.Action("Purchase", new { id = inv.invoice_id })">Thanh toán lại</a>
+                                </div>
                             </div>
-                        </div>*@
+                        }
                     </div>
                 </div>
             </div>

@@ -49,6 +49,9 @@ namespace KeyMax.Models
 
         public short? invoice_prepaid { get; set; }
 
+        [StringLength(20)]
+        public string invoice_vnp_transaction_id { get; set; }
+
         public DateTime invoice_created_at { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -68,6 +68,9 @@
     <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
       <HintPath>packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -183,7 +186,9 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\InvoicesController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LogoutController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Api2\Api2AreaRegistration.cs" />
     <Compile Include="Areas\Api2\Controllers\CartController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -196,6 +201,8 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataQuery\APICall.cs" />
     <Compile Include="DataQuery\QueryData.cs" />
+    <Compile Include="DataQuery\VNPAY.cs" />
+    <Compile Include="DataQuery\VnPayLibrary.cs" />
     <Compile Include="Func.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,6 +213,7 @@
     <Compile Include="Models\InvoiceWithStatus.cs" />
     <Compile Include="Models\invoice_details.cs" />
     <Compile Include="Models\invoice_status.cs" />
+    <Compile Include="Models\OrderInfo.cs" />
     <Compile Include="Models\products.cs" />
     <Compile Include="Models\ProductWithType.cs" />
     <Compile Include="Models\product_types.cs" />
@@ -535,6 +543,8 @@
     <Content Include="Areas\Admin\Views\Invoices\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Invoices\Print.cshtml" />
+    <Content Include="Areas\Admin\Views\Reports\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Reports\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -576,6 +586,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Logout\" />
     <Folder Include="Areas\Api2\Data\" />
     <Folder Include="Areas\Api2\Views\Shared\" />
   </ItemGroup>

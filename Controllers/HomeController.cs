@@ -1,4 +1,5 @@
 ﻿using KeyMax.DataQuery;
+using KeyMax.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace KeyMax.Controllers
 {
     public class HomeController : Controller
     {
+        Func f = new Func();
         QueryData QD = new QueryData();
 
         public ActionResult Index()
@@ -19,8 +21,19 @@ namespace KeyMax.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
+            return View();
+        }
+        [HttpPost]
+        public ActionResult About(reports r)
+        {
+            string msg;
+            if (QD.VerifyRecaptcha(Request.Form["g-recaptcha-response"]))
+            {
+                QD.PostReport(r, out msg);
+                if (string.IsNullOrEmpty(msg)) msg = "Gửi thông tin thành công!";
+            }
+            else msg = "Xác minh không thành công. Vui lòng thử lại!";
+            ViewData["msg"] = msg;
             return View();
         }
 

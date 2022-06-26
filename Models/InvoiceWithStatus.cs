@@ -20,6 +20,7 @@ namespace KeyMax.Models
         public int invoice_status_id { get; set; }
         public string invoice_status_name { get; set; }
         public short invoice_prepaid { get; set; }
+        public string invoice_vnp_transaction_id { get; set; }
         public DateTime invoice_created_at { get; set; }
     }
 }

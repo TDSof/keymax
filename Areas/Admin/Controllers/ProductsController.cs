@@ -27,7 +27,7 @@ namespace KeyMax.Areas.Admin.Controllers
         public ActionResult Add(products p)
         {
             QD.PostProduct(p, out string msg);
-            if (String.IsNullOrEmpty(msg)) msg = "Thêm thành công!";
+            if (string.IsNullOrEmpty(msg)) msg = "Thêm thành công!";
             ViewData["msg"] = msg;
             //ViewData["listPT"] = QD.GetProductTypes();
             //return View();

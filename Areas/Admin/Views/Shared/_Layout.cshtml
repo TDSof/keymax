@@ -1,6 +1,7 @@
 ﻿@if(Session["admin"] == null)
 {
-    <script>window.location.href = "/Admin/Login";</script>
+    @*<script>window.location.href = "/Admin/Login";</script>*@
+    Response.Redirect(Url.Action("Index", "Login"));
 }
 <!DOCTYPE html>
 <html lang="vi" dir="ltr">
@@ -205,9 +206,9 @@
                                 </li>
 
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="#">
+                                    <a class="sidebar-link sidebar-title link-nav" href="~/Admin/Reports/Index">
                                         <i data-feather="file-text"></i>
-                                        <span>Báo cáo & Góp ý</span>
+                                        <span>Báo cáo - Góp ý - Liên hệ</span>
                                     </a>
                                 </li>
 
@@ -223,7 +224,7 @@
             <!-- index body start -->
             <div class="page-body">
                 <div class="container-fluid">
-                    @if (!String.IsNullOrEmpty((string)ViewData["msg"]))
+                    @if (!string.IsNullOrEmpty((string)ViewData["msg"]))
                     {
                         <script>alert(`@Html.Raw(ViewData["msg"])`);</script>
                     }
@@ -253,12 +254,12 @@
         <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="modal-title" id="staticBackdropLabel">Logging Out</h5>
-                    <p>Are you sure you want to log out?</p>
+                    <h5 class="modal-title" id="staticBackdropLabel">Đăng xuất</h5>
+                    <p>Bạn có muốn đăng xuất không?</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="button-box">
-                        <button type="button" class="btn btn--no " data-bs-dismiss="modal">No</button>
-                        <button type="button" class="btn  btn--yes btn-primary">Yes</button>
+                        <button type="button" class="btn btn--no " data-bs-dismiss="modal">Không</button>
+                        <a href="@Url.Action("Index", "Logout")" type="button" class="btn  btn--yes btn-primary">Có</a>
                     </div>
                 </div>
             </div>
@@ -309,6 +310,11 @@
 
     <!-- Theme js -->
     <script src="~/Content/assets/js/script.js"></script>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </body>
 
 </html>

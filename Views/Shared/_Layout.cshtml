@@ -130,7 +130,7 @@
                                                         <a href="~/User" class="d-block">Thông tin cá nhân</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" class="d-block">Đăng xuất</a>
+                                                        <a href="/User/Logout" class="d-block">Đăng xuất</a>
                                                     </li>
                                                 }
                                                 else
@@ -236,7 +236,7 @@
     </header>
     <!-- header end -->
 
-    @if (!String.IsNullOrEmpty((string)ViewData["msg"]))
+    @if (!string.IsNullOrEmpty((string)ViewData["msg"]))
     {
         <script>alert(`@Html.Raw(ViewData["msg"])`);</script>
     }

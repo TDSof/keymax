@@ -13,6 +13,12 @@ namespace KeyMax
         public static string IDClientGoogle = "987251945724-c3uqooemo7p1o1tj1q0v1nha5882hhe6.apps.googleusercontent.com";
         public static string IDClientFacebook = "559900125477541";
 
+        public static string RECAPTCHA_SITE_KEY = "6LeShkgfAAAAAD17sscX7kYWeY4yrHcbNR__Smsv";
+        public static string RECAPTCHA_SECRET_KEY = "6LeShkgfAAAAAGhsTOj5fVVt_MtHxiX-XmyF--yC";
+
+        public static string vnp_TmnCode = "JDW67A9Y";
+        public static string vnp_HashSecret = "LUNSQRAOZYLJODQZQRXELIZHSRHRIBVM";
+
         public string NumberToStr(int number)
         {
             return string.Format("{0:n0}", number);

@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Contact Us</h3>
+                <h3>Báo cáo - Góp ý</h3>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
@@ -28,7 +28,7 @@
                                 <i class="fas fa-home"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Contact us</li>
+                        <li class="breadcrumb-item active" aria-current="page">Báo cáo - Góp ý - Liên hệ</li>
                     </ol>
                 </nav>
             </div>
@@ -48,26 +48,28 @@
                             <p class="ms-0 w-100">Điền thông tin đầy đủ vào form dưới đây.</p>
                         </div>
                     </div>
-                    <div class="row g-4 mt-md-1 mt-2">
-                        <div class="col-md-6">
-                            <label for="first" class="form-label">Họ tên</label>
-                            <input type="text" class="form-control" id="first" placeholder="Nhập họ tên" required />
+                    <form method="post" action="">
+                        <div class="row g-4 mt-md-1 mt-2">
+                            <div class="col-md-6">
+                                <label for="first" class="form-label">Họ tên</label>
+                                <input type="text" class="form-control" id="first" placeholder="Nhập họ tên" name="report_fullname" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Nhập Email" name="report_email" required />
+                            </div>
+                            <div class="col-12">
+                                <label for="comment" class="form-label">Nội dung</label>
+                                <textarea class="form-control" id="comment" rows="5" name="report_content" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="g-recaptcha" data-sitekey="@Func.RECAPTCHA_SITE_KEY"></div>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-solid-default" type="submit">Gửi</button>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Nhập Email" required />
-                        </div>
-                        <div class="col-12">
-                            <label for="comment" class="form-label">Nội dung</label>
-                            <textarea class="form-control" id="comment" rows="5" required></textarea>
-                        </div>
-                        <div class="col-12">
-                            <div class="g-recaptcha" data-sitekey="6LeShkgfAAAAAD17sscX7kYWeY4yrHcbNR__Smsv"></div>
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-solid-default" type="submit">Gửi</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 

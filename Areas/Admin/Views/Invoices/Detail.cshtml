@@ -5,6 +5,7 @@
     Func f = new Func();
     var inv = (InvoiceWithStatus)ViewData["invoice"];
     var listProducts = (List<ProductWithType>)ViewData["listProducts"];
+    var listINVS = (List<invoice_status>)ViewData["listINVS"];
 }
 
 <div class="row">
@@ -108,13 +109,21 @@
                                         <li>@inv.invoice_user_address</li>
                                     </ul>
 
+                                    <h4>Trạng thái đơn hàng</h4>
+                                    <ul class="order-details">
+                                        <li>@inv.invoice_status_name</li>
+                                    </ul>
+
                                     <div class="payment-mode">
                                         <h4>Phương thức thanh toán</h4>
-                                        <p>
-                                            Pay on Delivery (Cash/Card). Cash on delivery (COD)
-                                            available. Card/Net banking acceptance subject to device
-                                            availability.
-                                        </p>
+                                        @if (inv.invoice_prepaid == 0)
+                                        {
+                                            <p>Thanh toán khi nhận hàng (COD)</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Thanh toán trực tuyến (VN PAY)</p>
+                                        }
                                     </div>
 
                                     <div class="delivery-sec">
@@ -122,6 +131,16 @@
                                             expected date of delivery: <span>october 22, 2018</span>
                                         </h3>*@
                                         <a href="javascript:" onclick="w=window.open('@Url.Action("Print", new { invoice_id = inv.invoice_id })'); w.print();">In hoá đơn</a>
+                                    </div>
+                                    <div class="delivery-sec">
+                                        <h3>Đổi trạng thái đơn hàng</h3>
+                                        @foreach (var item in listINVS)
+                                        {
+                                            if (item.invoice_status_id != inv.invoice_status_id)
+                                            {
+                                                <a href="@Url.Action("Update", new { invoice_id = inv.invoice_id, invoice_status_id = item.invoice_status_id })">@item.invoice_status_name</a>
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>

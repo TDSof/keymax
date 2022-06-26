@@ -22,5 +22,7 @@ namespace KeyMax.Models
         [Column(TypeName = "ntext")]
         [Required]
         public string report_content { get; set; }
+
+        public DateTime report_created_at { get; set; }
     }
 }
