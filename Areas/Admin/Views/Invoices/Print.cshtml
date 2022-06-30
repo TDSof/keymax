@@ -2,8 +2,8 @@
 @{
     Layout = null;
     Func f = new Func();
-    var inv = (InvoiceWithStatus)ViewData["invoice"];
-    var listProducts = (List<ProductWithType>)ViewData["listProducts"];
+    var inv = (invoices)ViewData["invoice"];
+    var listProducts = (List<invoice_details>)ViewData["listProducts"];
 }
 
 
@@ -175,10 +175,10 @@
             @foreach (var item in listProducts)
             {
                 <tr class="item">
-                    <td>@item.product_name</td>
-                    <td>@item.product_quantity</td>
-                    <td>@f.NumberToStr(item.product_price)</td>
-                    <td>@f.NumberToStr((int)item.product_quantity * item.product_price)đ</td>
+                    <td>@item.product.product_name</td>
+                    <td>@item.invd_product_quantity</td>
+                    <td>@f.NumberToStr(item.invd_product_price)</td>
+                    <td>@f.NumberToStr((int)item.invd_product_quantity * item.invd_product_price)đ</td>
                 </tr>
             }
 

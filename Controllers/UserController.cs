@@ -59,7 +59,7 @@ namespace KeyMax.Controllers
             }
             ViewData["msg"] = msg;
             ViewData["user"] = QD.GetUser((int)Session["user_id"]);
-            return View();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Login()

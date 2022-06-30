@@ -32,7 +32,7 @@ namespace KeyMax.Controllers
                 listCart.Clear();
             }
         }
-        public string Pay(InvoiceWithStatus invoice)
+        public string Pay(invoices invoice)
         {
             OrderInfo order = new OrderInfo();
             order.OrderId = invoice.invoice_id;
@@ -49,8 +49,8 @@ namespace KeyMax.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
-
             List<Cart> listCart = GetCart();
+            if (listCart.Count == 0) return RedirectToAction("Index", "Shop");
             int count = listCart.Count;
             if (count == 0) RedirectToAction("Index", "Shop");
             ViewData["listCart"] = listCart;
@@ -64,7 +64,7 @@ namespace KeyMax.Controllers
             if (id > 0)
             {
                 RemoveCart();
-                InvoiceWithStatus invoice = QD.GetInvoice(id);
+                invoices invoice = QD.GetInvoice(id);
                 if (invoice.invoice_prepaid == 1)
                 {
                     return Redirect(Pay(invoice));
@@ -83,9 +83,9 @@ namespace KeyMax.Controllers
         public ActionResult Success(int? id)
         {
             if (id == null) return HttpNotFound();
-            List<ProductWithType> listInvd = QD.GetInvoiceDetails((int)id);
+            List<invoice_details> listInvd = QD.GetInvoiceDetails((int)id);
             if (listInvd == null) return HttpNotFound();
-            InvoiceWithStatus invoice = QD.GetInvoice((int)id);
+            invoices invoice = QD.GetInvoice((int)id);
             string msg = "";
             string vnp_transaction_id = invoice.invoice_vnp_transaction_id;
             if (invoice.invoice_prepaid > 0 && string.IsNullOrEmpty(invoice.invoice_vnp_transaction_id) && Request.QueryString.Count > 0)
@@ -161,7 +161,7 @@ namespace KeyMax.Controllers
         public ActionResult Purchase(int? id)
         {
             if (id == null) return HttpNotFound();
-            InvoiceWithStatus invoice = QD.GetInvoice((int)id);
+            invoices invoice = QD.GetInvoice((int)id);
             if (invoice == null) return HttpNotFound();
             if (invoice.invoice_prepaid > 0 && !string.IsNullOrEmpty(invoice.invoice_vnp_transaction_id)) return RedirectToAction("Index", "Home");
             return Redirect(Pay(invoice));

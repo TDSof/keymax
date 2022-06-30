@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Detail";
     Func f = new Func();
-    var inv = (InvoiceWithStatus)ViewData["invoice"];
-    var listInvd = (List<ProductWithType>)ViewData["listInvd"];
+    var inv = (invoices)ViewData["invoice"];
+    var listInvd = (List<invoice_details>)ViewData["listInvd"];
     string status1 = "todo", status2 = "todo", status3 = "todo", status4 = "todo";
     string ss = "Đã xác nhận thông tin thanh toán";
     if (inv.invoice_prepaid == 1)
@@ -156,24 +156,24 @@
                     </thead>
                     @foreach (var item in listInvd)
                     {
-                        int subtotal = (int)item.product_quantity * item.product_price;
+                        int subtotal = (int)item.invd_product_quantity * item.invd_product_price;
                         <tbody id="product_@item.product_id">
                             <tr>
                                 <td>
                                     <a href="javascript:void();">
-                                        <img src="@item.product_img" class=" blur-up lazyload" />
+                                        <img src="@item.product.product_img" class=" blur-up lazyload" />
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="~/Shop/Detail/@item.product_id">@item.product_name</a>
+                                    <a href="~/Shop/Detail/@item.product_id">@item.product.product_name</a>
                                 </td>
                                 <td>
-                                    <h2 class="product_price" id="product_price_@item.product_id" data-price="@item.product_price">@f.NumberToStr(item.product_price)</h2>
+                                    <h2 class="product_price" id="product_price_@item.product_id" data-price="@item.invd_product_price">@f.NumberToStr(item.invd_product_price)</h2>
                                 </td>
                                 <td>
                                     <div class="qty-box">
                                         <div class="input-group">
-                                            <input type="number" name="quantity" class="form-control input-number" id="product_quantity_@item.product_id" value="@item.product_quantity" disabled />
+                                            <input type="number" name="quantity" class="form-control input-number" id="product_quantity_@item.product_id" value="@item.invd_product_quantity" disabled />
                                         </div>
                                     </div>
                                 </td>

@@ -1,7 +1,7 @@
 ﻿
 @{
-    var product = (ProductWithType)ViewData["product"];
-    var productRelated = (List<ProductWithType>)ViewData["productRelated"];
+    var product = (products)ViewData["product"];
+    var productRelated = (List<products>)ViewData["productRelated"];
     ViewBag.Title = "Sản phẩm " + product.product_name;
     Func f = new Func();
 }
@@ -158,13 +158,13 @@
 
                                 <div class="label-section">
                                     <span class="badge badge-grey-color">#1 Best seller</span>
-                                    <span class="label-text">trong danh mục @product.product_type_name</span>
+                                    <span class="label-text">trong danh mục @product.product_types.product_type_name</span>
                                 </div>
 
                                 <h3 class="price-detail">@f.NumberToStr(product.product_price) đ</h3>
 
                                 <div id="selectSize" class="addeffect-section product-description border-product">
-                                    <h6 class="product-title product-title-2 d-block">quantity</h6>
+                                    <h6 class="product-title product-title-2 d-block">Số lượng</h6>
                                     <div class="qty-box">
                                         <div class="input-group">
                                             <span class="input-group-prepend">
@@ -216,7 +216,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="../../../https@www.instagram.com/default.htm">
+                                                <a href="#">
                                                     <i class="fab fa-instagram"></i>
                                                 </a>
                                             </li>
@@ -267,7 +267,7 @@
                                         </tr>
                                         <tr>
                                             <th>Danh mục</th>
-                                            <td>@product.product_type_name</td>
+                                            <td>@product.product_types.product_type_name</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="product-details">
                                     <div class="rating-details">
-                                        <span class="font-light grid-content">@item.product_type_name</span>
+                                        <span class="font-light grid-content">@item.product_types.product_type_name</span>
                                         @*<ul class="rating mt-0">
                                             <li>
                                                 <i class="fas fa-star theme-color"></i>

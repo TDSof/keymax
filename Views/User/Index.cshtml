@@ -3,7 +3,7 @@
     ViewBag.Title = "Trang cá nhân";
     Func f = new Func();
     var user = (users)ViewData["user"];
-    var listInvoices = (List<InvoiceWithStatus>)ViewData["listInvoices"];
+    var listInvoices = (List<invoices>)ViewData["listInvoices"];
     var userOrder = (UserOrder)ViewData["UserOrder"];
 }
 
@@ -206,7 +206,7 @@
                                                 <p class="mt-0">#@item.invoice_id</p>
                                             </td>
                                             <td>
-                                                <p class="@status-button btn btn-sm">@item.invoice_status_name</p>
+                                                <p class="@status-button btn btn-sm">@item.invoice_status.invoice_status_name</p>
                                             </td>
                                             <td>
                                                 <p class="theme-color fs-6">@f.NumberToStr(item.invoice_subtotal)</p>

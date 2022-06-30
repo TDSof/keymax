@@ -42,7 +42,7 @@ namespace KeyMax.Controllers
         public ActionResult Detail(int? id)
         {
             if (id == null) return HttpNotFound();
-            ProductWithType p = QD.GetProductWithType((int)id);
+            products p = QD.GetProductWithType((int)id);
             if (p == null) return HttpNotFound();
             if (p.product_published == 0) return HttpNotFound();
             ViewData["product"] = p;

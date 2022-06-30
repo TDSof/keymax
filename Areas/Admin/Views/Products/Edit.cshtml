@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
     var listPT = (List<product_types>)ViewData["listPT"];
-    ProductWithType p = (ProductWithType)ViewData["product"];
+    var p = (products)ViewData["product"];
 
     string isCheckedA = "";
     string isCheckedB = "checked";

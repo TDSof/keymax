@@ -13,12 +13,12 @@ namespace KeyMax.Controllers.Api
     {
         Func f = new Func();
         QueryData QD = new QueryData();
-        public List<ProductWithType> Get()
+        public List<products> Get()
         {
             var a = QD.GetProductsWithType();
             return a;
         }
-        public ProductWithType Get(int id)
+        public products Get(int id)
         {
             var a = QD.GetProductWithType(id);
             return a;

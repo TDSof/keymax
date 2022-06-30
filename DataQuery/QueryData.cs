@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -267,25 +268,27 @@ namespace KeyMax.DataQuery
         //        else return dbContext.products.Where(oh => oh.product_name.ToLower().Contains(search.ToLower())).ToList();
         //    }
         //}
-        public List<ProductWithType> GetProductsWithType(string search = "", int order_by = 1, int product_type_id = 0, int page = 1, int limit = 20, int product_published = 1)
+        public List<products> GetProductsWithType(string search = "", int order_by = 1, int product_type_id = 0, int page = 1, int limit = 20, int product_published = 1)
         {
             using (var dbContext = new DBContext())
             {
-                IQueryable<ProductWithType> list = (from p in dbContext.products
-                                                    join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
-                                                    from pwt in product_with_type.DefaultIfEmpty()
-                                                    select new ProductWithType
-                                                    {
-                                                        product_id = p.product_id,
-                                                        product_name = p.product_name,
-                                                        product_type_id = p.product_type_id,
-                                                        product_price = p.product_price,
-                                                        product_img = p.product_img,
-                                                        product_quantity = p.product_quantity,
-                                                        product_description = p.product_description,
-                                                        product_type_name = pwt.product_type_name,
-                                                        product_published = p.product_published
-                                                    });
+                //IQueryable<ProductWithType> list = (from p in dbContext.products
+                //                                    join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
+                //                                    from pwt in product_with_type.DefaultIfEmpty()
+                //                                    select new ProductWithType
+                //                                    {
+                //                                        product_id = p.product_id,
+                //                                        product_name = p.product_name,
+                //                                        product_type_id = p.product_type_id,
+                //                                        product_price = p.product_price,
+                //                                        product_img = p.product_img,
+                //                                        product_quantity = p.product_quantity,
+                //                                        product_description = p.product_description,
+                //                                        product_type_name = pwt.product_type_name,
+                //                                        product_published = p.product_published
+                //                                    });
+                IQueryable<products> list = (from p in dbContext.products
+                                             select p).Include(i => i.product_types);
 
                 if (!string.IsNullOrEmpty(search)) list = list.Where(w => w.product_name.ToLower().Contains(search.ToLower()));
                 if (product_type_id > 0) list = list.Where(w => w.product_type_id == product_type_id);
@@ -321,37 +324,31 @@ namespace KeyMax.DataQuery
                 return dbContext.products.SingleOrDefault(s => s.product_id == product_id);
             }
         }
-        public ProductWithType GetProductWithType(int product_id)
+        public products GetProductWithType(int product_id)
         {
             using (var dbContext = new DBContext())
             {
+                //return (from p in dbContext.products
+                //        join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
+                //        from pwt in product_with_type.DefaultIfEmpty()
+                //        where p.product_id == product_id
+                //        select new ProductWithType
+                //        {
+                //            product_id = p.product_id,
+                //            product_name = p.product_name,
+                //            product_type_id = p.product_type_id,
+                //            product_price = p.product_price,
+                //            product_img = p.product_img,
+                //            product_quantity = p.product_quantity,
+                //            product_description = p.product_description,
+                //            product_published = p.product_published,
+                //            product_type_name = pwt.product_type_name
+                //        }).FirstOrDefault();
                 return (from p in dbContext.products
-                        join pt in dbContext.product_types on p.product_type_id equals pt.product_type_id into product_with_type
-                        from pwt in product_with_type.DefaultIfEmpty()
                         where p.product_id == product_id
-                        select new ProductWithType
-                        {
-                            product_id = p.product_id,
-                            product_name = p.product_name,
-                            product_type_id = p.product_type_id,
-                            product_price = p.product_price,
-                            product_img = p.product_img,
-                            product_quantity = p.product_quantity,
-                            product_description = p.product_description,
-                            product_published = p.product_published,
-                            product_type_name = pwt.product_type_name
-                        }).FirstOrDefault();
+                        select p).Include(i => i.product_types).FirstOrDefault();
+
             }
-            //Product = new products
-            //{
-            //    product_id = p.product_id,
-            //    product_name = p.product_name,
-            //    product_type_id = p.product_type_id,
-            //    product_price = p.product_price,
-            //    product_img = p.product_img,
-            //    product_quantity = p.product_quantity,
-            //    product_description = p.product_description
-            //},
         }
         public List<product_types> GetProductTypes()
         {
@@ -436,61 +433,69 @@ namespace KeyMax.DataQuery
             }
         }
 
-        public List<InvoiceWithStatus> GetInvoices(int user_id = 0)
+        public List<invoices> GetInvoices(int user_id = 0)
         {
             using (var dbContext = new DBContext())
             {
-                IEnumerable<InvoiceWithStatus> list = (from inv in dbContext.invoices
-                    join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
-                    from iws in invoice_with_status.DefaultIfEmpty()
-                    select new InvoiceWithStatus
-                    {
-                        invoice_id = inv.invoice_id,
-                        user_id = inv.user_id,
-                        invoice_user_fullname = inv.invoice_user_fullname,
-                        invoice_user_phone_number = inv.invoice_user_phone_number,
-                        invoice_user_email = inv.invoice_user_email,
-                        invoice_user_address = inv.invoice_user_address,
-                        invoice_note = inv.invoice_note,
-                        invoice_note_admin = inv.invoice_note_admin,
-                        invoice_subtotal = inv.invoice_subtotal,
-                        invoice_fee_transport = inv.invoice_fee_transport,
-                        invoice_status_id = iws.invoice_status_id,
-                        invoice_status_name = iws.invoice_status_name,
-                        invoice_prepaid = (short)inv.invoice_prepaid,
-                        invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id,
-                        invoice_created_at = inv.invoice_created_at
-                    }).OrderByDescending(o => o.invoice_id);
+                //IEnumerable<InvoiceWithStatus> list = (from inv in dbContext.invoices
+                //                                       join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
+                //                                       from iws in invoice_with_status.DefaultIfEmpty()
+                //                                       select new InvoiceWithStatus
+                //                                       {
+                //                                           invoice_id = inv.invoice_id,
+                //                                           user_id = inv.user_id,
+                //                                           invoice_user_fullname = inv.invoice_user_fullname,
+                //                                           invoice_user_phone_number = inv.invoice_user_phone_number,
+                //                                           invoice_user_email = inv.invoice_user_email,
+                //                                           invoice_user_address = inv.invoice_user_address,
+                //                                           invoice_note = inv.invoice_note,
+                //                                           invoice_note_admin = inv.invoice_note_admin,
+                //                                           invoice_subtotal = inv.invoice_subtotal,
+                //                                           invoice_fee_transport = inv.invoice_fee_transport,
+                //                                           invoice_status_id = iws.invoice_status_id,
+                //                                           invoice_status_name = iws.invoice_status_name,
+                //                                           invoice_prepaid = (short)inv.invoice_prepaid,
+                //                                           invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id,
+                //                                           invoice_created_at = inv.invoice_created_at
+                //                                       }).OrderByDescending(o => o.invoice_id);
+                IEnumerable<invoices> list = (from inv in dbContext.invoices
+                                              orderby inv.invoice_id descending
+                                              select inv).Include(i => i.invoice_status);
+
                 if (user_id > 0) return list.Where(w => w.user_id == user_id).ToList();
                 else return list.ToList();
             }
         }
-        public InvoiceWithStatus GetInvoice(int invoice_id)
+        public invoices GetInvoice(int invoice_id)
         {
             using (var dbContext = new DBContext())
             {
+                //return (from inv in dbContext.invoices
+                //        join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
+                //        from iws in invoice_with_status.DefaultIfEmpty()
+                //        where inv.invoice_id == invoice_id
+                //        select new InvoiceWithStatus
+                //        {
+                //            invoice_id = inv.invoice_id,
+                //            user_id = inv.user_id,
+                //            invoice_user_fullname = inv.invoice_user_fullname,
+                //            invoice_user_phone_number = inv.invoice_user_phone_number,
+                //            invoice_user_email = inv.invoice_user_email,
+                //            invoice_user_address = inv.invoice_user_address,
+                //            invoice_note = inv.invoice_note,
+                //            invoice_note_admin = inv.invoice_note_admin,
+                //            invoice_subtotal = inv.invoice_subtotal,
+                //            invoice_fee_transport = inv.invoice_fee_transport,
+                //            invoice_status_id = iws.invoice_status_id,
+                //            invoice_status_name = iws.invoice_status_name,
+                //            invoice_prepaid = (short)inv.invoice_prepaid,
+                //            invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id,
+                //            invoice_created_at = inv.invoice_created_at
+                //        }).FirstOrDefault();
                 return (from inv in dbContext.invoices
-                        join invs in dbContext.invoice_status on inv.invoice_status_id equals invs.invoice_status_id into invoice_with_status
-                        from iws in invoice_with_status.DefaultIfEmpty()
                         where inv.invoice_id == invoice_id
-                        select new InvoiceWithStatus
-                        {
-                            invoice_id = inv.invoice_id,
-                            user_id = inv.user_id,
-                            invoice_user_fullname = inv.invoice_user_fullname,
-                            invoice_user_phone_number = inv.invoice_user_phone_number,
-                            invoice_user_email = inv.invoice_user_email,
-                            invoice_user_address = inv.invoice_user_address,
-                            invoice_note = inv.invoice_note,
-                            invoice_note_admin = inv.invoice_note_admin,
-                            invoice_subtotal = inv.invoice_subtotal,
-                            invoice_fee_transport = inv.invoice_fee_transport,
-                            invoice_status_id = iws.invoice_status_id,
-                            invoice_status_name = iws.invoice_status_name,
-                            invoice_prepaid = (short)inv.invoice_prepaid,
-                            invoice_vnp_transaction_id = inv.invoice_vnp_transaction_id,
-                            invoice_created_at = inv.invoice_created_at
-                        }).FirstOrDefault();
+                        select inv).Include(i => i.invoice_status).FirstOrDefault();
+
             }
         }
         public int PostInvoice(invoices inv, int user_id, List<Cart> carts, out string err)
@@ -535,7 +540,7 @@ namespace KeyMax.DataQuery
                 }
             }
         }
-        public bool UpdateInvoice(InvoiceWithStatus inv)
+        public bool UpdateInvoice(invoices inv)
         {
             try
             {
@@ -557,23 +562,24 @@ namespace KeyMax.DataQuery
                 return false;
             }
         }
-        public List<ProductWithType> GetInvoiceDetails(int invoice_id)
+        public List<invoice_details> GetInvoiceDetails(int invoice_id)
         {
             using (var dbContext = new DBContext())
             {
-                return (from invd in dbContext.invoice_details
-                        join p in dbContext.products
-                        on invd.product_id equals p.product_id into product_with_type
-                        from pwt in product_with_type.DefaultIfEmpty()
-                        where invd.invoice_id == invoice_id
-                        select new ProductWithType
-                        {
-                            product_id = pwt.product_id,
-                            product_name = pwt.product_name,
-                            product_price = pwt.product_price,
-                            product_img = pwt.product_img,
-                            product_quantity = invd.invd_product_quantity
-                        }).ToList();
+                //return (from invd in dbContext.invoice_details
+                //        join p in dbContext.products
+                //        on invd.product_id equals p.product_id into product_with_type
+                //        from pwt in product_with_type.DefaultIfEmpty()
+                //        where invd.invoice_id == invoice_id
+                //        select new ProductWithType
+                //        {
+                //            product_id = pwt.product_id,
+                //            product_name = pwt.product_name,
+                //            product_price = pwt.product_price,
+                //            product_img = pwt.product_img,
+                //            product_quantity = invd.invd_product_quantity
+                //        }).ToList();
+                return (from invd in dbContext.invoice_details where invd.invoice_id == invoice_id select invd).Include(i => i.product).ToList();
             }
         }
         public List<invoice_status> GetInvoiceStatus()

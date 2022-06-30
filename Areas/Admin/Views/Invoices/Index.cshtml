@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     Func f = new Func();
-    var listInv = (List<InvoiceWithStatus>)ViewData["listInv"];
+    var listInv = (List<invoices>)ViewData["listInv"];
 }
 
 <div class="row">
@@ -22,6 +22,7 @@
                                     <th>Tổng đơn</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày đặt</th>
+                                    <th>Thanh toán</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
@@ -49,9 +50,17 @@
                                         <td>@item.invoice_user_phone_number</td>
                                         <td>@f.NumberToStr(item.invoice_subtotal) đ</td>
                                         <td class="order-@status">
-                                            <span>@item.invoice_status_name</span>
+                                            <span>@item.invoice_status.invoice_status_name</span>
                                         </td>
                                         <td>@item.invoice_created_at.ToString()</td>
+                                        @if(item.invoice_prepaid == 0)
+                                        {
+                                            <td>COD</td>
+                                        }
+                                        else
+                                        {
+                                            <td>VN PAY</td>
+                                        }
                                         <td>
                                             <ul>
                                                 <li>

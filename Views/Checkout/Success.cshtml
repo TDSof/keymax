@@ -1,8 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "Chi tiết đơn hàng";
-    var listInvd = (List<ProductWithType>)ViewData["listInvd"];
-    var inv = (InvoiceWithStatus)ViewData["invoice"];
+    var listInvd = (List<invoice_details>)ViewData["listInvd"];
+    var inv = (invoices)ViewData["invoice"];
     Func f = new Func();
     int total = 0;
     var vnp_transaction_id = (string)ViewData["vnp_transaction_id"];
@@ -54,24 +54,24 @@
                         <tbody>
                             @foreach (var item in listInvd)
                             {
-                                total += (int)item.product_quantity * item.product_price;
+                                total += (int)item.invd_product_quantity * item.invd_product_price;
                                 <tr class="table-order">
                                     <td>
                                         <a href="javascript:void(0)">
-                                            <img src="@item.product_img" class="img-fluid blur-up lazyload" />
+                                            <img src="@item.product.product_img" class="img-fluid blur-up lazyload" />
                                         </a>
                                     </td>
                                     <td>
                                         <p>Tên sản phẩm</p>
-                                        <h5>@item.product_name</h5>
+                                        <h5>@item.product.product_name</h5>
                                     </td>
                                     <td>
                                         <p>Số lượng</p>
-                                        <h5>@item.product_quantity</h5>
+                                        <h5>@item.invd_product_quantity</h5>
                                     </td>
                                     <td>
                                         <p>Giá</p>
-                                        <h5>@f.NumberToStr(item.product_price)</h5>
+                                        <h5>@f.NumberToStr(item.invd_product_price)</h5>
                                     </td>
                                 </tr>
                             }

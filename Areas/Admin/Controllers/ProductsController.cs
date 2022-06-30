@@ -36,7 +36,7 @@ namespace KeyMax.Areas.Admin.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null) return RedirectToAction("Index");
-            ProductWithType p = QD.GetProductWithType((int)id);
+            products p = QD.GetProductWithType((int)id);
             if (p == null) return RedirectToAction("Index");
             ViewData["listPT"] = QD.GetProductTypes();
             ViewData["product"] = p;
@@ -46,7 +46,7 @@ namespace KeyMax.Areas.Admin.Controllers
         public ActionResult Edit(int? id, products prod)
         {
             if (id == null) return RedirectToAction("Index");
-            ProductWithType p = QD.GetProductWithType((int)id);
+            products p = QD.GetProductWithType((int)id);
             if (p == null) return RedirectToAction("Index");
             QD.UpdateProduct(prod, out string msg);
             if(String.IsNullOrEmpty(msg))

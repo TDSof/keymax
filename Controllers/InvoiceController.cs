@@ -15,7 +15,7 @@ namespace KeyMax.Controllers
         public ActionResult Detail(int? invoice_id)
         {
             if (invoice_id == null) return RedirectToAction("Index", "Home");
-            InvoiceWithStatus inv = QD.GetInvoice((int)invoice_id);
+            invoices inv = QD.GetInvoice((int)invoice_id);
             if (inv == null) return RedirectToAction("Index", "Home");
             ViewData["invoice"] = inv;
             if (inv.user_id != (int)Session["user_id"]) return RedirectToAction("Index", "Home");
@@ -24,7 +24,7 @@ namespace KeyMax.Controllers
         }
         public ActionResult Cancel(int id)
         {
-            InvoiceWithStatus inv = QD.GetInvoice(id);
+            invoices inv = QD.GetInvoice(id);
             inv.invoice_status_id = 3;
             if (inv != null) QD.UpdateInvoice(inv);
             return RedirectToAction("Index", "User");

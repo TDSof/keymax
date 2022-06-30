@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Shop";
-    var listProducts = (List<ProductWithType>)ViewData["listProducts"];
+    var listProducts = (List<products>)ViewData["listProducts"];
     var listPT = (List<product_types>)ViewData["listPT"];
     Func f = new Func();
     string productTypeName = "Loại sản phẩm";
@@ -216,7 +216,7 @@
                                     </div>
                                     <div class="product-details">
                                         <div class="rating-details">
-                                            <span class="font-light grid-content">@item.product_type_name</span>
+                                            <span class="font-light grid-content">@item.product_types.product_type_name</span>
                                         </div>
                                         <div class="main-price">
                                             <a href="~/Shop/Detail/@item.product_id" class="font-default">

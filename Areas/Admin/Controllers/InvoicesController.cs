@@ -19,9 +19,9 @@ namespace KeyMax.Areas.Admin.Controllers
         }
         public ActionResult Detail(int invoice_id)
         {
-            InvoiceWithStatus inv = QD.GetInvoice(invoice_id);
+            invoices inv = QD.GetInvoice(invoice_id);
             if (inv == null) return RedirectToAction("Index");
-            List<ProductWithType> listPwt = QD.GetInvoiceDetails(invoice_id);
+            List<invoice_details> listPwt = QD.GetInvoiceDetails(invoice_id);
             ViewData["invoice"] = inv;
             ViewData["listProducts"] = listPwt;
             ViewData["listINVS"] = QD.GetInvoiceStatus();
@@ -30,16 +30,16 @@ namespace KeyMax.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Detail(int invoice_id, int? invoice_status_id)
         {
-            InvoiceWithStatus inv = QD.GetInvoice(invoice_id);
+            invoices inv = QD.GetInvoice(invoice_id);
             if (inv == null) return RedirectToAction("Index");
-            List<ProductWithType> listPwt = QD.GetInvoiceDetails(invoice_id);
+            List<invoice_details> listPwt = QD.GetInvoiceDetails(invoice_id);
             ViewData["invoice"] = inv;
             ViewData["listProducts"] = listPwt;
             return View();
         }
         public ActionResult Update(int invoice_id, int invoice_status_id)
         {
-            InvoiceWithStatus inv = QD.GetInvoice(invoice_id);
+            invoices inv = QD.GetInvoice(invoice_id);
             if (inv == null) return RedirectToAction("Index");
             inv.invoice_status_id = invoice_status_id;
             QD.UpdateInvoice(inv);
@@ -47,9 +47,9 @@ namespace KeyMax.Areas.Admin.Controllers
         }
         public ActionResult Print(int invoice_id)
         {
-            InvoiceWithStatus inv = QD.GetInvoice(invoice_id);
+            invoices inv = QD.GetInvoice(invoice_id);
             if (inv == null) return RedirectToAction("Index");
-            List<ProductWithType> listPwt = QD.GetInvoiceDetails(invoice_id);
+            List<invoice_details> listPwt = QD.GetInvoiceDetails(invoice_id);
             ViewData["invoice"] = inv;
             ViewData["listProducts"] = listPwt;
             return View();
