@@ -11,10 +11,11 @@ namespace KeyMax.DataQuery
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string Pay(OrderInfo order)
+        public string Pay(OrderInfo order, string vnp_Returnurl = "")
         {
             //Get Config Info
-            string vnp_Returnurl = "http://localhost:53593/Checkout/Success/" + order.OrderId; //URL nhan ket qua tra ve 
+            if(string.IsNullOrEmpty(vnp_Returnurl))
+                vnp_Returnurl = "http://localhost:53593/Checkout/Success/" + order.OrderId; //URL nhan ket qua tra ve 
             string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; //URL thanh toan cua VNPAY 
             string vnp_TmnCode = Func.vnp_TmnCode; //Ma website
             string vnp_HashSecret = Func.vnp_HashSecret; //Chuoi bi mat

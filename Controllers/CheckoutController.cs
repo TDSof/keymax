@@ -39,7 +39,7 @@ namespace KeyMax.Controllers
             order.Amount = invoice.invoice_subtotal;
             order.OrderDesc = "Thanh toan truc tuyen KeyMax: " + invoice.invoice_id;
             VNPAY vnpay = new VNPAY();
-            return vnpay.Pay(order);
+            return vnpay.Pay(order, Request.Url.Scheme + "://" + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) + "/Checkout/Success/" + order.OrderId);
         }
 
         // GET: Checkout

@@ -217,6 +217,10 @@
                                         {
                                             <a href="@Url.Action("Cancel", "Invoice", new { id = inv.invoice_id })">Huỷ đơn</a>
                                         }
+                                        @if (inv.invoice_prepaid > 0 && string.IsNullOrEmpty(inv.invoice_vnp_transaction_id))
+                                        {
+                                            <a href="@Url.Action("Purchase", "Checkout", new { id = inv.invoice_id })">Thanh toán lại</a>
+                                        }
                                     </div>
                                 </div>
                             </div>

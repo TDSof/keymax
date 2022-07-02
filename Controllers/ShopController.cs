@@ -47,6 +47,7 @@ namespace KeyMax.Controllers
             if (p.product_published == 0) return HttpNotFound();
             ViewData["product"] = p;
             ViewData["productRelated"] = QD.GetProductsWithType("", 1, (int)p.product_type_id, 1, 8);
+            ViewBag.Description = p.product_description;
             return View();
         }
         //[HttpPost]

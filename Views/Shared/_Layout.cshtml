@@ -1,4 +1,13 @@
 ﻿@{ 
+    string content = ViewBag.Description;
+    if (string.IsNullOrEmpty(content))
+    {
+        content = "Website bán sản phẩm công nghệ, bàn phím và các loại keycap, switch...";
+    }
+    else
+    {
+        content = content.Substring(0, 100) + "...";
+    }
     Session["listCart"] = Session["listCart"] == null ? new List<Cart>() : Session["listCart"];
 }
 
@@ -24,6 +33,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@content" />
     <link rel="icon" href="~/Content/images/favicon/2.png" type="image/x-icon" />
     <title>@ViewBag.Title - KeyMax</title>
 
