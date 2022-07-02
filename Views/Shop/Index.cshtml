@@ -3,6 +3,8 @@
     ViewBag.Title = "Shop";
     var listProducts = (List<products>)ViewData["listProducts"];
     var listPT = (List<product_types>)ViewData["listPT"];
+    int page = (int)ViewData["page"];
+    var endPage = Math.Ceiling((decimal)(int)ViewData["totalProducts"] / Func.DATA_PER_PAGE);
     Func f = new Func();
     string productTypeName = "Loại sản phẩm";
     product_types productType = listPT.Where(w => w.product_type_id == ViewBag.productTypeId).DefaultIfEmpty(new product_types { product_type_id = 0, product_type_name = "Loại sản phẩm" }).SingleOrDefault();
@@ -238,29 +240,34 @@
 
                     <nav class="page-section">
                         <ul class="pagination">
-                            <li class="page-item">
+                            @*<li class="page-item">
                                 <a class="page-link" href="javascript:void(0)" aria-label="Previous">
                                     <span aria-hidden="true">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                 </a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="javascript:void(0)">1</a>
-                            </li>
-                            @*<li class="page-item">
-                                <a class="page-link" href="javascript:void(0)">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="javascript:void(0)">3</a>
                             </li>*@
-                            <li class="page-item">
+                            @for(var i = 1; i <= endPage; i++)
+                            {
+                                string active = "";
+                                if(i == page)
+                                {
+                                    active = "active";
+                                }
+                                if(Math.Abs(page - i) <= 3 || i == 1 || i == endPage)
+                                {
+                                    <li class="page-item @active">
+                                        <a class="page-link" href="javascript:" onclick="redirectParams('page', @i)">@i</a>
+                                    </li>
+                                }
+                            }
+                            @*<li class="page-item">
                                 <a class="page-link" aria-label="Next">
                                     <span aria-hidden="true">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
                                 </a>
-                            </li>
+                            </li>*@
                         </ul>
                     </nav>
                 </div>

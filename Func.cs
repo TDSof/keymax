@@ -19,6 +19,8 @@ namespace KeyMax
         public static string vnp_TmnCode = "JDW67A9Y";
         public static string vnp_HashSecret = "LUNSQRAOZYLJODQZQRXELIZHSRHRIBVM";
 
+        public static int DATA_PER_PAGE = 10;
+
         public string NumberToStr(int number)
         {
             return string.Format("{0:n0}", number);

@@ -18,10 +18,13 @@ namespace KeyMax.Controllers
             string keyword = Request.QueryString["keyword"];
             string orderBy = Request.QueryString["order_by"];
             string productTypeId = Request.QueryString["product_type_id"];
-            int order_by = 1, product_type_id = 0;
+            string page_ = Request.QueryString["page"];
+            int order_by = 1, product_type_id = 0, page = 0;
             if (keyword == null) keyword = "";
             if (orderBy != null) int.TryParse(orderBy, out order_by);
             if (productTypeId != null) int.TryParse(productTypeId, out product_type_id);
+            if (page_ != null) int.TryParse(page_, out page);
+            if (page <= 0) page = 1;
             switch (order_by)
             {
                 case 2:
@@ -34,8 +37,10 @@ namespace KeyMax.Controllers
                     ViewData["orderBy"] = "Mới cập nhật";
                     break;
             }
-            ViewData["listProducts"] = QD.GetProductsWithType(keyword, order_by, product_type_id, 0, 0);
+            ViewData["listProducts"] = QD.GetProductsWithType(keyword, order_by, product_type_id, page, Func.DATA_PER_PAGE);
             ViewData["listPT"] = QD.GetProductTypes();
+            ViewData["page"] = page;
+            ViewData["totalProducts"] = QD.GetCountProducts();
             ViewBag.productTypeId = product_type_id;
             return View();
         }

@@ -305,9 +305,10 @@ namespace KeyMax.DataQuery
                         list = list.OrderByDescending(o => o.product_id);
                         break;
                 }
-
-                if (limit == 0) return list.ToList();
-                else return list.Skip((page - 1) *  limit).Take(limit).ToList();
+                if (page <= 0) page = 1;
+                if (limit > 0) list = list.Skip((page - 1) * limit).Take(limit);
+                
+                return list.ToList();
             }
         }
         public int GetCountProducts()
