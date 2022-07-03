@@ -249,10 +249,11 @@
                             <div class="shipping-chart">
                                 <div class="part">
                                     <p class="font-light"><span style="white-space: pre-line">
-                                        @if (product.product_description != null)
+                                        @if (!string.IsNullOrEmpty(product.product_description))
                                         {
                                             @product.product_description.Replace("\\n", "\n")
                                         }
+                                        @*@product.product_description*@
                                         </span></p>
                                 </div>
                             </div>
